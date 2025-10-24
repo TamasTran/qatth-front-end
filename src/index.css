@@ -45,10 +45,11 @@ html, body, #root {
 }
 
 .btn-icon-only {
-  width: 40px;
-  overflow: hidden;
-  transition: width 0.3s ease;
-}
-.btn-icon-only:hover {
   width: auto;
+}
+nav a .btn-text {
+  display: none;
+}
+nav a:hover .btn-text {
+  display: inline;
 }
