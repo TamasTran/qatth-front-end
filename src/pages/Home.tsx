@@ -18,7 +18,7 @@ export default function Home() {
         <motion.section 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center bg-white rounded-3xl p-8 md:p-12 border border-brand-200/40 shadow-sm"
+          className="text-center p-8 md:p-12"
         >
           <h2 className="text-3xl md:text-4xl text-slate-900 font-bold mb-3">Sẵn sàng bắt đầu?</h2>
           <p className="text-slate-600 mb-8 max-w-2xl mx-auto text-lg">Đăng nhập để trải nghiệm đầy đủ tính năng của QATTH - AI hiểu bạn, Doanh nghiệp chọn bạn.</p>

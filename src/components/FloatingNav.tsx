@@ -3,8 +3,8 @@ import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAuth } from '../store/auth'
 import { 
-  Home, FileSearch, MessageSquare, Briefcase, Mic, 
-  LogIn, LogOut, User, UserPlus, FileText
+  Home, FileText, Zap, MessageCircle, Video, Briefcase, 
+  LogIn, LogOut, User, UserPlus, FileUp
 } from 'lucide-react'
 
 type FloatingNavProps = {
@@ -18,11 +18,11 @@ export function FloatingNav({ onAuthClick }: FloatingNavProps) {
 
   const mainNavItems = [
     { to: '/', label: 'Trang chủ', icon: <Home size={20} /> },
-    { to: '/cv-scanner', label: 'Quét CV', icon: <FileSearch size={20} /> },
+    { to: '/cv-scanner', label: 'Quét CV', icon: <FileUp size={20} /> },
     { to: '/cv-builder', label: 'Tạo CV', icon: <FileText size={20} /> },
-    { to: '/chatbot', label: 'Chatbot CV', icon: <MessageSquare size={20} /> },
+    { to: '/chatbot', label: 'Chatbot CV', icon: <MessageCircle size={20} /> },
+    { to: '/interview', label: 'Phỏng vấn', icon: <Video size={20} /> },
     { to: '/jobs', label: 'Tuyển dụng', icon: <Briefcase size={20} /> },
-    { to: '/interview', label: 'Phỏng vấn', icon: <Mic size={20} /> },
   ]
 
   const handleAuthClick = (mode: 'login' | 'register') => {
