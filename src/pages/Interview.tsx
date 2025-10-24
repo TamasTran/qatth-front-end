@@ -109,7 +109,7 @@ export default function Interview() {
     <div className="grid md:grid-cols-3 gap-6">
       <div className="card md:col-span-2">
         <div className="flex items-center justify-between mb-2">
-          <h2 className="font-semibold text-slate-900">Phỏng vấn mô phỏng bằng giọng nói</h2>
+          <h2 className="font-bold text-lg text-slate-900">Phỏng vấn mô phỏng bằng giọng nói</h2>
           <select value={role} onChange={e=>setRole(e.target.value)} className="bg-brand-50 border border-brand-300/60 rounded-xl p-2 text-slate-900">
             <option value="generic">Chung</option>
             <option value="frontend">Frontend</option>
@@ -117,9 +117,9 @@ export default function Interview() {
             <option value="data-analyst">Data Analyst</option>
           </select>
         </div>
-        <div className="rounded-xl border border-brand-300/40 p-4 bg-brand-50/50">
-          <div className="text-sm text-slate-700">Câu hỏi {idx+1}/{questions.length}</div>
-          <div className="text-lg mt-2 text-slate-900">{questions[idx].q}</div>
+        <div className="rounded-xl border border-brand-200/40 p-4 bg-white">
+          <div className="text-sm text-slate-600">Câu hỏi {idx+1}/{questions.length}</div>
+          <div className="text-lg mt-2 text-slate-900 font-semibold">{questions[idx].q}</div>
           <div className="mt-4 flex gap-2">
             {!running ? (
               <>
@@ -132,21 +132,21 @@ export default function Interview() {
             <button className="btn btn-ghost" onClick={next}>Câu tiếp</button>
           </div>
           <div className="mt-4">
-            <div className="text-sm text-slate-700">Bản ghi câu trả lời:</div>
-            <div className="min-h-[80px] rounded-xl bg-slate-100 border border-brand-300/40 p-3 text-slate-900">{transcript || '—'}</div>
-            <div className="mt-2 text-sm text-slate-900">Điểm từ khoá: <span className="text-brand-700 font-bold">{scores[idx] ?? 0}</span>/100</div>
+            <div className="text-sm text-slate-600">Bản ghi câu trả lời:</div>
+            <div className="min-h-[80px] rounded-xl bg-white border border-brand-200/50 p-3 text-slate-900">{transcript || '—'}</div>
+            <div className="mt-2 text-sm text-slate-900">Điểm từ khoá: <span className="text-brand-600 font-bold">{scores[idx] ?? 0}</span>/100</div>
           </div>
         </div>
       </div>
       <div className="card">
-        <h3 className="font-semibold mb-2 text-slate-900">Mẹo trả lời tốt</h3>
+        <h3 className="font-bold text-lg mb-2 text-brand-600">Mẹo trả lời tốt</h3>
         <ul className="text-sm text-slate-700 list-disc pl-5 space-y-1">
           <li>STAR: Situation - Task - Action - Result</li>
           <li>Đưa số liệu cụ thể (%, thời gian, chi phí)</li>
           <li>Liên hệ vị trí đang ứng tuyển</li>
         </ul>
         <div className="mt-4">
-          <h4 className="font-medium mb-1 text-slate-900">Kết quả phiên</h4>
+          <h4 className="font-bold text-brand-600 mb-1">Kết quả phiên</h4>
           <div className="text-sm text-slate-700">Điểm trung bình: {Math.round( (scores.reduce((a,b)=>a+(b||0),0) / Math.max(1,scores.length)) || 0 )}/100</div>
         </div>
       </div>

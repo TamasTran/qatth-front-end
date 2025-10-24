@@ -52,11 +52,11 @@ export default function Chatbot() {
   return (
     <div className="grid md:grid-cols-3 gap-6">
       <div className="card md:col-span-2">
-        <h2 className="font-semibold mb-3 text-slate-900">Chatbot tư vấn CV</h2>
-        <div className="h-[420px] overflow-y-auto rounded-xl bg-slate-900/40 p-4 border border-white/10">
+        <h2 className="font-bold text-lg mb-3 text-brand-900">Chatbot tư vấn CV</h2>
+        <div className="h-[420px] overflow-y-auto rounded-xl bg-white p-4 border border-brand-200/40 shadow-inner">
           {messages.map((m,i)=>(
             <div key={i} className={`mb-3 ${m.role==='user' ? 'text-right' : 'text-left'}`}>
-              <div className={`inline-block px-3 py-2 rounded-xl ${m.role==='user' ? 'bg-brand-600 text-white' : 'bg-brand-600/20 text-slate-100'}`}>
+              <div className={`inline-block px-4 py-2 rounded-2xl max-w-xs ${m.role==='user' ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-glow' : 'bg-white text-brand-900 border border-brand-200/60 shadow-sm'}`}>
                 {m.content}
               </div>
             </div>
@@ -64,14 +64,14 @@ export default function Chatbot() {
           <div ref={bottomRef}/>
         </div>
         <div className="mt-3 flex gap-2">
-          <input value={input} onChange={e=>setInput(e.target.value)} placeholder="Nhập câu hỏi..." className="flex-1 rounded-xl bg-slate-900 border border-white/10 p-3 ring-focus"/>
+          <input value={input} onChange={e=>setInput(e.target.value)} onKeyPress={e=>e.key==='Enter' && onSend()} placeholder="Nhập câu hỏi..." className="flex-1 rounded-xl bg-white border border-brand-200/60 p-3 ring-focus text-slate-900 placeholder-slate-400"/>
           <button onClick={onSend} className="btn btn-primary">Gửi</button>
         </div>
       </div>
       <div className="card">
-        <h3 className="font-semibold mb-2 text-slate-900">Thông tin đã quét</h3>
-        <p className="text-sm text-slate-700">CV: {cvText ? 'Đã có dữ liệu' : 'Chưa có dữ liệu'}</p>
-        <p className="text-sm text-slate-700 mb-2">Kỹ năng: {skills.length ? skills.join(', ') : '—'}</p>
+        <h3 className="font-bold text-lg mb-2 text-brand-900">Thông tin đã quét</h3>
+        <p className="text-sm text-brand-700">CV: {cvText ? 'Đã có dữ liệu' : 'Chưa có dữ liệu'}</p>
+        <p className="text-sm text-brand-700 mb-2">Kỹ năng: {skills.length ? skills.join(', ') : '—'}</p>
         <a href="/cv-scanner" className="btn btn-ghost">Quét CV ngay</a>
       </div>
     </div>

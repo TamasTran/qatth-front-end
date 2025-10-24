@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --glass: rgba(12,18,28,0.55);
-  --glass-border: rgba(255,255,255,0.08);
+  --glass: rgba(30,58,137,0.4);
+  --glass-border: rgba(37,99,235,0.15);
 }
 html, body, #root {
   height: 100%;
@@ -25,23 +25,23 @@ html, body, #root {
   border: 1px solid var(--glass-border);
 }
 .card {
-  @apply rounded-2xl p-6 border bg-gradient-to-br from-brand-50 to-brand-100 border-brand-300/60 backdrop-blur-md hover:border-brand-400/80 transition-all duration-300;
+  @apply rounded-2xl p-6 border bg-white border-brand-200/40 hover:border-brand-300/60 transition-all duration-300 shadow-sm hover:shadow-md;
 }
 .btn {
-  @apply inline-flex items-center gap-2 rounded-xl px-4 py-2 font-medium disabled:opacity-50;
+  @apply inline-flex items-center gap-2 rounded-xl px-4 py-2 font-medium disabled:opacity-50 transition-all duration-200;
 }
 .btn-primary {
-  @apply btn bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-glow hover:from-brand-700 hover:to-brand-800 transition-all duration-200;
+  @apply btn bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-glow hover:from-brand-700 hover:to-brand-800 hover:shadow-lg active:scale-95;
 }
 .btn-ghost {
-  @apply btn bg-transparent border border-brand-400/60 text-brand-300 hover:bg-brand-600/20 hover:border-brand-400 hover:text-brand-200 transition-all duration-200;
+  @apply btn bg-transparent border border-brand-300/80 text-brand-700 hover:bg-brand-50 hover:border-brand-400 hover:text-brand-800 active:scale-95;
 }
 .ring-focus {
-  @apply focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-slate-900;
+  @apply focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-blue-50;
 }
 .hero-gradient {
-  background: radial-gradient(1200px 600px at 20% -10%, rgba(26,107,138,0.15), transparent),
-              radial-gradient(1000px 400px at 90% 20%, rgba(79,168,201,0.08), transparent);
+  background: radial-gradient(1200px 600px at 20% -10%, rgba(71,85,105,0.04), transparent),
+              radial-gradient(1000px 400px at 90% 20%, rgba(148,163,184,0.02), transparent);
 }
 
 .btn-icon-only {

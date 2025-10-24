@@ -2,22 +2,43 @@
 // src/utils/cv.ts
 import * as pdfjsLib from "pdfjs-dist";
 
+// Set up the worker
+pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+
 export async function extractTextFromPDF(file: File): Promise<string> {
-  const ab = await file.arrayBuffer();
+  try {
+    const ab = await file.arrayBuffer();
 
-  // Run PDF.js on the main thread -> no worker import needed
-  const pdf = await (pdfjsLib as any).getDocument({
-    data: new Uint8Array(ab),
-    disableWorker: true,         // <- key line
-  }).promise;
+    const pdf = await pdfjsLib.getDocument({
+      data: new Uint8Array(ab),
+    }).promise;
 
-  let text = "";
-  for (let i = 1; i <= pdf.numPages; i++) {
-    const page = await pdf.getPage(i);
-    const content = await page.getTextContent();
-    text += content.items.map((it: any) => ("str" in it ? it.str : "")).join(" ") + "\n";
+    let text = "";
+    for (let i = 1; i <= pdf.numPages; i++) {
+      try {
+        const page = await pdf.getPage(i);
+        const content = await page.getTextContent();
+        const pageText = content.items
+          .map((it: any) => ("str" in it ? it.str : ""))
+          .join(" ");
+        text += pageText + "\n";
+      } catch (pageError) {
+        console.warn(`Lỗi đọc trang ${i}:`, pageError);
+        text += `[Lỗi đọc trang ${i}]\n`;
+      }
+    }
+    
+    if (!text.trim()) {
+      throw new Error("PDF không chứa văn bản có thể trích xuất");
+    }
+    
+    return text;
+  } catch (error: any) {
+    console.error("Lỗi đọc PDF:", error);
+    throw new Error(
+      `Không thể đọc PDF: ${error.message || "File PDF không hợp lệ"}. Vui lòng dán nội dung CV trực tiếp.`
+    );
   }
-  return text;
 }
 
 // keep the rest (analyzeCV, highlightKeywords) as-is

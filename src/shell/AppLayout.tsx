@@ -30,7 +30,8 @@ export function AppLayout() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-brand-50">
+    <div className="min-h-screen bg-[linear-gradient(135deg,#E0F2FE_0%,#F0F9FF_40%,#F8FAFC_100%)]">
+      <div className="fixed inset-0 -z-10 bg-radial-fade pointer-events-none" />
       <FloatingNav onAuthClick={openAuthModal} />
       <motion.main
         initial={{ opacity: 0 }}
@@ -40,7 +41,7 @@ export function AppLayout() {
       >
         <Outlet context={{ openAuthModal, setAuthModalOnClose }} />
       </motion.main>
-      <footer className="border-t border-transparent py-8 text-center text-sm text-brand-700 bg-transparent">
+      <footer className="border-t border-brand-200/30 py-8 text-center text-sm text-slate-700 bg-white backdrop-blur-sm">
         © {new Date().getFullYear()} QATTH - AI hiểu bạn Doanh nghiệp chọn bạn.
       </footer>
 
