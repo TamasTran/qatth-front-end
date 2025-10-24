@@ -7,7 +7,11 @@ import {
   LogIn, LogOut, User, UserPlus 
 } from 'lucide-react'
 
-export function FloatingNav() {
+type FloatingNavProps = {
+  onAuthClick?: (mode: 'login' | 'register') => void
+}
+
+export function FloatingNav({ onAuthClick }: FloatingNavProps) {
   const [isHovered, setIsHovered] = useState(false)
   const { user, logout } = useAuth()
   const navigate = useNavigate()
@@ -20,9 +24,17 @@ export function FloatingNav() {
     { to: '/interview', label: 'Phỏng vấn', icon: <Mic size={20} /> },
   ]
 
+  const handleAuthClick = (mode: 'login' | 'register') => {
+    if (onAuthClick) {
+      onAuthClick(mode)
+    } else {
+      navigate(`/${mode}`)
+    }
+  }
+
   const authItems = !user ? [
-    { to: '/login', label: 'Đăng nhập', icon: <LogIn size={20} /> },
-    { to: '/register', label: 'Tạo tài khoản', icon: <UserPlus size={20} /> },
+    { mode: 'login' as const, label: 'Đăng nhập', icon: <LogIn size={20} /> },
+    { mode: 'register' as const, label: 'Tạo tài khoản', icon: <UserPlus size={20} /> },
   ] : [
     { to: '/profile', label: user.fullName, icon: <User size={20} /> },
   ]
@@ -83,26 +95,44 @@ export function FloatingNav() {
             {/* Auth Items */}
             {authItems.map((item, index) => (
               <motion.div
-                key={item.to}
+                key={'to' in item ? item.to : item.mode}
                 initial={{ x: -50, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: (mainNavItems.length + index) * 0.1 }}
               >
-                <Link
-                  to={item.to}
-                  className="group relative w-12 h-12 rounded-full bg-white/80 backdrop-blur-sm text-slate-600 hover:bg-slate-100 shadow-md flex items-center justify-center transition-all duration-200"
-                >
-                  <motion.div
-                    whileHover={{ scale: 1.3 }}
-                    className="flex items-center justify-center"
+                {'to' in item ? (
+                  <Link
+                    to={item.to}
+                    className="group relative w-12 h-12 rounded-full bg-white/80 backdrop-blur-sm text-slate-600 hover:bg-slate-100 shadow-md flex items-center justify-center transition-all duration-200"
                   >
-                    {item.icon}
-                  </motion.div>
-                  {/* Tooltip */}
-                  <div className="absolute left-16 bg-slate-800 text-white px-3 py-1 rounded-lg text-sm opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
-                    {item.label}
-                  </div>
-                </Link>
+                    <motion.div
+                      whileHover={{ scale: 1.3 }}
+                      className="flex items-center justify-center"
+                    >
+                      {item.icon}
+                    </motion.div>
+                    {/* Tooltip */}
+                    <div className="absolute left-16 bg-slate-800 text-white px-3 py-1 rounded-lg text-sm opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+                      {item.label}
+                    </div>
+                  </Link>
+                ) : (
+                  <button
+                    onClick={() => handleAuthClick(item.mode)}
+                    className="group relative w-12 h-12 rounded-full bg-white/80 backdrop-blur-sm text-slate-600 hover:bg-slate-100 shadow-md flex items-center justify-center transition-all duration-200"
+                  >
+                    <motion.div
+                      whileHover={{ scale: 1.3 }}
+                      className="flex items-center justify-center"
+                    >
+                      {item.icon}
+                    </motion.div>
+                    {/* Tooltip */}
+                    <div className="absolute left-16 bg-slate-800 text-white px-3 py-1 rounded-lg text-sm opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+                      {item.label}
+                    </div>
+                  </button>
+                )}
               </motion.div>
             ))}
 

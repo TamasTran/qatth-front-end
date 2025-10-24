@@ -6,23 +6,23 @@ export default {
     extend: {
       colors: {
         brand: {
-          50: '#ffffffff', 
-          100: '#d4ffef', 
-          200: '#aaffd9', 
-          300: '#6effc0', 
-          400: '#3bffa8', 
-          500: '#00f98a', 
-          600: '#00d97a',
-          700: '#00b868', 
-          800: '#009555', 
-          900: '#007744', 
+          50: '#f0f9fb', 
+          100: '#d9f0f5', 
+          200: '#b3dfe9', 
+          300: '#7cc5d8', 
+          400: '#4fa8c9', 
+          500: '#2d8ba8', 
+          600: '#1a6b8a',
+          700: '#0d4f6f', 
+          800: '#083a52', 
+          900: '#052a3d', 
         }
       },
       boxShadow: {
-        glow: '0 0 25px rgba(51,245,196,0.35)',
+        glow: '0 0 25px rgba(26,107,138,0.4)',
       },
       backgroundImage: {
-        'radial-fade': 'radial-gradient(1200px 600px at 20% -10%, rgba(51,245,196,0.25), transparent), radial-gradient(1000px 400px at 90% 20%, rgba(51,245,196,0.15), transparent)'
+        'radial-fade': 'radial-gradient(1200px 600px at 20% -10%, rgba(26,107,138,0.2), transparent), radial-gradient(1000px 400px at 90% 20%, rgba(79,168,201,0.12), transparent)'
       }
     },
   },

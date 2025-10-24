@@ -25,23 +25,23 @@ html, body, #root {
   border: 1px solid var(--glass-border);
 }
 .card {
-  @apply glass rounded-2xl p-6 border;
+  @apply rounded-2xl p-6 border bg-gradient-to-br from-brand-50 to-brand-100 border-brand-300/60 backdrop-blur-md hover:border-brand-400/80 transition-all duration-300;
 }
 .btn {
   @apply inline-flex items-center gap-2 rounded-xl px-4 py-2 font-medium disabled:opacity-50;
 }
 .btn-primary {
-  @apply btn bg-brand-600 text-white shadow-glow;
+  @apply btn bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-glow hover:from-brand-700 hover:to-brand-800 transition-all duration-200;
 }
 .btn-ghost {
-  @apply btn bg-transparent border border-white/10;
+  @apply btn bg-transparent border border-brand-400/60 text-brand-300 hover:bg-brand-600/20 hover:border-brand-400 hover:text-brand-200 transition-all duration-200;
 }
 .ring-focus {
   @apply focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-slate-900;
 }
 .hero-gradient {
-  background: radial-gradient(1200px 600px at 20% -10%, rgba(16,200,173,0.15), transparent),
-              radial-gradient(1000px 400px at 90% 20%, rgba(16,200,173,0.07), transparent);
+  background: radial-gradient(1200px 600px at 20% -10%, rgba(26,107,138,0.15), transparent),
+              radial-gradient(1000px 400px at 90% 20%, rgba(79,168,201,0.08), transparent);
 }
 
 .btn-icon-only {

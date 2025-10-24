@@ -16,22 +16,22 @@ export default function Jobs() {
   return (
     <div>
       <div className="flex items-end justify-between mb-4">
-        <h2 className="text-xl font-semibold">Tuyển dụng</h2>
-        <p className="text-sm text-slate-400">Gợi ý dựa trên kỹ năng từ CV (nếu có).</p>
+        <h2 className="text-xl font-semibold text-slate-900">Tuyển dụng</h2>
+        <p className="text-sm text-slate-700">Gợi ý dựa trên kỹ năng từ CV (nếu có).</p>
       </div>
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {jobs.map(j => (
           <Link key={j.id} to={`/jobs/${j.id}`} className="card">
             <div className="flex items-center justify-between">
-              <div className="font-semibold">{j.title}</div>
-              <div className="text-xs text-slate-400">{matchScore(j.tags)}% match</div>
+              <div className="font-semibold text-slate-900">{j.title}</div>
+              <div className="text-xs text-brand-700 font-bold">{matchScore(j.tags)}% match</div>
             </div>
-            <div className="text-sm text-slate-300">{j.company} • {j.location}</div>
-            <div className="text-xs text-slate-400 mt-1">{j.salary}</div>
+            <div className="text-sm text-slate-700">{j.company} • {j.location}</div>
+            <div className="text-xs text-slate-700 mt-1">{j.salary}</div>
             <div className="mt-3 flex flex-wrap gap-2">
-              {j.tags.map(t => <span key={t} className="text-xs px-2 py-1 rounded-full bg-white/10">{t}</span>)}
+              {j.tags.map(t => <span key={t} className="text-xs px-2 py-1 rounded-full bg-brand-200 text-brand-800 font-medium">{t}</span>)}
             </div>
-            <p className="text-sm text-slate-300 mt-3 line-clamp-3">{j.description}</p>
+            <p className="text-sm text-slate-700 mt-3 line-clamp-3">{j.description}</p>
           </Link>
         ))}
       </div>

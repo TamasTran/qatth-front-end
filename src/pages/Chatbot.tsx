@@ -52,11 +52,11 @@ export default function Chatbot() {
   return (
     <div className="grid md:grid-cols-3 gap-6">
       <div className="card md:col-span-2">
-        <h2 className="font-semibold mb-3">Chatbot tư vấn CV</h2>
+        <h2 className="font-semibold mb-3 text-slate-900">Chatbot tư vấn CV</h2>
         <div className="h-[420px] overflow-y-auto rounded-xl bg-slate-900/40 p-4 border border-white/10">
           {messages.map((m,i)=>(
             <div key={i} className={`mb-3 ${m.role==='user' ? 'text-right' : 'text-left'}`}>
-              <div className={`inline-block px-3 py-2 rounded-xl ${m.role==='user' ? 'bg-brand-600 text-white' : 'bg-white/10'}`}>
+              <div className={`inline-block px-3 py-2 rounded-xl ${m.role==='user' ? 'bg-brand-600 text-white' : 'bg-brand-600/20 text-slate-100'}`}>
                 {m.content}
               </div>
             </div>
@@ -69,9 +69,9 @@ export default function Chatbot() {
         </div>
       </div>
       <div className="card">
-        <h3 className="font-semibold mb-2">Thông tin đã quét</h3>
-        <p className="text-sm text-slate-400">CV: {cvText ? 'Đã có dữ liệu' : 'Chưa có dữ liệu'}</p>
-        <p className="text-sm text-slate-400 mb-2">Kỹ năng: {skills.length ? skills.join(', ') : '—'}</p>
+        <h3 className="font-semibold mb-2 text-slate-900">Thông tin đã quét</h3>
+        <p className="text-sm text-slate-700">CV: {cvText ? 'Đã có dữ liệu' : 'Chưa có dữ liệu'}</p>
+        <p className="text-sm text-slate-700 mb-2">Kỹ năng: {skills.length ? skills.join(', ') : '—'}</p>
         <a href="/cv-scanner" className="btn btn-ghost">Quét CV ngay</a>
       </div>
     </div>
