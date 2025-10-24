@@ -21,7 +21,7 @@ export default function Jobs() {
       </div>
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {jobs.map(j => (
-          <Link key={j.id} to={`/jobs/${j.id}`} className="card hover:translate-y-[-2px] hover:shadow-glow transition">
+          <Link key={j.id} to={`/jobs/${j.id}`} className="card">
             <div className="flex items-center justify-between">
               <div className="font-semibold">{j.title}</div>
               <div className="text-xs text-slate-400">{matchScore(j.tags)}% match</div>
