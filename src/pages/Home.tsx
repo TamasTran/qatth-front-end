@@ -28,29 +28,42 @@ export default function Home() {
           </div>
         </motion.section>
       )}
-      <section className="relative overflow-hidden rounded-3xl p-10 md:p-16 bg-white shadow-lg border border-brand-200/40">
-        <div className="absolute -top-32 -left-32 size-96 rounded-full bg-brand-600/5 blur-3xl" />
-        <div className="absolute -bottom-32 -right-32 size-96 rounded-full bg-brand-400/4 blur-3xl" />
+      <section className="relative overflow-hidden rounded-3xl p-10 md:p-16 bg-gradient-to-br from-violet-50 via-white to-indigo-100 shadow-xl border border-violet-200/50">
+        <div className="absolute -top-32 -left-32 size-96 rounded-full bg-brand-600/10 blur-3xl" />
+        <div className="absolute -bottom-32 -right-32 size-96 rounded-full bg-brand-500/8 blur-3xl" />
         <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: .6 }}
-            className="space-y-6"
+            className="space-y-8"
           >
-          <img src="/logo.png" alt="QATTH" className="h-[80px] w-[120px] object-contain drop-shadow-lg" />
+            {/* Logo & Title */}
+            <div className="flex items-center gap-6">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <img src="/logo.png" alt="QATTH" className="h-[140px] w-[160px] object-contain drop-shadow-xl" />
+              </motion.div>
+              <div>
+                <h1 className="text-6xl md:text-7xl font-black leading-tight font-satoshi bg-gradient-to-r from-brand-800 via-brand-600 to-brand-700 bg-clip-text text-transparent drop-shadow-sm">
+                  QATTH
+                </h1>
+                <p className="text-lg font-semibold text-brand-600 mt-1">AI hiểu bạn - Doanh nghiệp chọn bạn</p>
+              </div>
+            </div>
 
-            <h1 className="text-5xl md:text-6xl font-bold leading-tight bg-gradient-to-r from-brand-700 to-brand-600 bg-clip-text text-transparent">
-              QATTH
-            </h1>
-            <p className="text-xl font-semibold text-slate-900">AI hiểu bạn, Doanh nghiệp chọn bạn</p>
-            <p className="text-slate-700 max-w-xl text-lg leading-relaxed">
+            {/* Description */}
+            <p className="text-slate-700 max-w-2xl text-lg leading-relaxed">
               Quét CV thông minh, gợi ý nghề phù hợp, chatbot tư vấn và mô phỏng phỏng vấn bằng giọng nói.
               Tất cả trên một giao diện hiện đại, mượt mà.
             </p>
-            <div className="flex flex-wrap gap-4 pt-4">
-              <Link to="/cv-scanner" className="btn btn-primary ring-focus px-6 py-3 text-base">Bắt đầu quét CV</Link>
-              <Link to="/jobs" className="btn btn-ghost ring-focus px-6 py-3 text-base">Khám phá việc làm</Link>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-wrap gap-4 pt-2">
+              <Link to="/cv-scanner" className="btn btn-primary ring-focus px-8 py-3 text-base font-semibold shadow-lg hover:shadow-xl transition-shadow">Bắt đầu quét CV</Link>
+              <Link to="/jobs" className="btn btn-ghost ring-focus px-8 py-3 text-base font-semibold hover:bg-brand-50">Khám phá việc làm</Link>
             </div>
           </motion.div>
           <motion.div
