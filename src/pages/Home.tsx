@@ -47,7 +47,7 @@ export default function Home() {
                 <img src="/logo.png" alt="QATTH" className="h-[140px] w-[160px] object-contain drop-shadow-xl" />
               </motion.div>
               <div>
-                <h1 className="text-6xl md:text-7xl font-black leading-tight font-satoshi bg-gradient-to-r from-brand-800 via-brand-600 to-brand-700 bg-clip-text text-transparent drop-shadow-sm">
+                <h1 className="text-6xl md:text-7xl font-bold leading-tight font-satoshi tracking-tight bg-gradient-to-r from-gray-900 via-gray-800 to-gray-600 bg-clip-text text-transparent drop-shadow-sm">
                   QATTH
                 </h1>
                 <p className="text-lg font-semibold text-brand-600 mt-1">AI hiểu bạn - Doanh nghiệp chọn bạn</p>
