@@ -46,7 +46,7 @@ export function Header({ onAuthClick }: HeaderProps) {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 flex-shrink-0">
-            <img src="/logo.png" alt="QATTH" className="h-14 w-24 object-contain" />
+            <img src="/logo.png" alt="QATTH" className="h-14 w-22 object-contain" />
           </Link>
 
           {/* Desktop Navigation + Auth Section */}
