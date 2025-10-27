@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { FloatingNav } from '../components/FloatingNav'
+import { Header } from '../components/Header'
 import { AuthModal } from '../components/AuthModal'
 
 export function AppLayout() {
@@ -32,7 +32,7 @@ export function AppLayout() {
   return (
     <div className="min-h-screen bg-[linear-gradient(135deg,#E0F2FE_0%,#F0F9FF_40%,#F8FAFC_100%)]">
       <div className="fixed inset-0 -z-10 bg-radial-fade pointer-events-none" />
-      <FloatingNav onAuthClick={openAuthModal} />
+      <Header onAuthClick={openAuthModal} />
       <motion.main
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
