@@ -46,30 +46,35 @@ export function Header({ onAuthClick }: HeaderProps) {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 flex-shrink-0">
-            <img src="/logo.png" alt="QATTH" className="h-10 w-12 object-contain" />
+            <img src="/logo.png" alt="QATTH" className="h-14 w-17 object-contain" />
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1">
-            {mainNavItems.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                className={({ isActive }) =>
-                  `px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    isActive
-                      ? 'bg-brand-100 text-brand-600'
-                      : 'text-slate-700 hover:bg-brand-50'
-                  }`
-                }
-              >
-                {item.label}
-              </NavLink>
-            ))}
-          </nav>
+          {/* Desktop Navigation + Auth Section */}
+          <div className="hidden lg:flex items-center gap-8 ml-12">
+            {/* Desktop Navigation */}
+            <nav className="flex items-center gap-1">
+              {mainNavItems.map((item) => (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  className={({ isActive }) =>
+                    `px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                      isActive
+                        ? 'bg-brand-100 text-brand-600'
+                        : 'text-slate-700 hover:bg-brand-50'
+                    }`
+                  }
+                >
+                  {item.label}
+                </NavLink>
+              ))}
+            </nav>
 
-          {/* Auth Section */}
-          <div className="flex items-center gap-3">
+            {/* Divider */}
+            <div className="w-px h-6 bg-brand-300"></div>
+
+            {/* Auth Section */}
+            <div className="flex items-center gap-3">
             {!user ? (
               <div className="hidden sm:flex items-center gap-2">
                 <button
@@ -104,14 +109,16 @@ export function Header({ onAuthClick }: HeaderProps) {
               </div>
             )}
 
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 text-slate-700 hover:bg-brand-50 rounded-lg transition-colors"
-            >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+            </div>
           </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="lg:hidden p-2 text-slate-700 hover:bg-brand-50 rounded-lg transition-colors"
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
 
         {/* Mobile Menu */}
