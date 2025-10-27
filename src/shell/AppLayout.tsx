@@ -30,7 +30,7 @@ export function AppLayout() {
   }
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(135deg,#E0F2FE_0%,#F0F9FF_40%,#F8FAFC_100%)]">
+    <div className="min-h-screen bg-[linear-gradient(60deg,#E0F2FE_0%,#F0F9FF_40%,#F8FAFC_100%)]">
       <div className="fixed inset-0 -z-10 bg-radial-fade pointer-events-none" />
       <Header onAuthClick={openAuthModal} />
       <motion.main
