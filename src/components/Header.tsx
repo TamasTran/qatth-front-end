@@ -47,7 +47,6 @@ export function Header({ onAuthClick }: HeaderProps) {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 flex-shrink-0">
             <img src="/logo.png" alt="QATTH" className="h-10 w-12 object-contain" />
-            <span className="font-bold text-xl text-brand-600 hidden sm:inline">QATTH</span>
           </Link>
 
           {/* Desktop Navigation */}
