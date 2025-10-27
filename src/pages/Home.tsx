@@ -1,21 +1,41 @@
 
 import { motion } from 'framer-motion'
 import { useOutletContext } from 'react-router-dom'
-import { FileSearch, MessageSquare, Mic, User, Upload, Sparkles, Rocket, ArrowRight, Zap, Brain, Target, Workflow, Lightbulb } from 'lucide-react'
+import { useState, useEffect, useMemo } from 'react'
+import { FileSearch, MessageSquare, Mic, User, Upload, Sparkles, Rocket, ArrowRight, Zap, Brain, Target, Workflow, Lightbulb, Users, TrendingUp, Clock, Handshake, DollarSign } from 'lucide-react'
 import { useAuth } from '../store/auth'
 
 type OutletContextType = {
   openAuthModal: (mode: 'login' | 'register') => void
 }
 
+const generateStars = () => {
+  return [...Array(15)].map((_, i) => {
+    return {
+      id: i,
+      posX: Math.random() * 100,
+      posY: Math.random() * 100,
+      duration: 2.5 + Math.random() * 1,
+      delay: Math.random() * 2,
+      size: 2.5 + Math.random() * 3
+    }
+  })
+}
+
 export default function Home() {
   const { user } = useAuth()
   const { openAuthModal } = useOutletContext<OutletContextType>()
+  const [viewportWidth, setViewportWidth] = useState(1500)
+  const stars = useMemo(() => generateStars(), [])
+
+  useEffect(() => {
+    setViewportWidth(window.innerWidth)
+  }, [])
 
   return (
     <div className="space-y-0">
       {/* Hero Section - Light Theme */}
-      <section className="relative h-screen md:h-auto md:min-h-[600px] overflow-hidden bg-gradient-to-br from-cyan-50 via-white to-violet-200 flex items-center justify-center border border-gray-200 shadow-lg rounded-2xl">
+      <section className="relative w-full h-auto md:min-h-[320px] overflow-hidden bg-gradient-to-br from-cyan-50 via-white to-violet-200 flex items-center justify-center">
         {/* Animated background elements */}
         <div className="absolute inset-0 overflow-hidden">
           <motion.div className="absolute top-20 left-10 w-72 h-72 bg-brand-200/20 rounded-full blur-3xl" animate={{ y: [0, 20, 0] }} transition={{ duration: 6, repeat: Infinity }} />
@@ -24,43 +44,54 @@ export default function Home() {
         </div>
 
         {/* Stars */}
-        <div className="absolute inset-0">
-          {[...Array(30)].map((_, i) => (
+        <div className="absolute inset-0 overflow-hidden">
+          {stars.map((star) => (
             <motion.div
-              key={i}
-              className="absolute w-2 h-2 bg-brand-400 rounded-full shadow-lg shadow-brand-400/40"
+              key={`star-${star.id}`}
+              className="absolute bg-brand-400 rounded-full pointer-events-none"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
+                left: `${star.posX}%`,
+                top: `${star.posY}%`,
+                width: `${star.size}px`,
+                height: `${star.size}px`,
+                boxShadow: `0 0 ${star.size * 2}px rgba(79, 168, 201, 0.8)`,
+                transform: 'translate(-50%, -50%)'
               }}
-              animate={{ opacity: [0.15, 0.6, 0.15], scale: [0.8, 1.3, 0.8] }}
-              transition={{ duration: 2 + Math.random() * 3, repeat: Infinity, delay: Math.random() * 2 }}
+              animate={{ 
+                opacity: [0.4, 0.9, 0.4]
+              }}
+              transition={{ 
+                duration: star.duration, 
+                repeat: Infinity, 
+                delay: star.delay,
+                ease: "easeInOut"
+              }}
             />
           ))}
         </div>
 
         {/* Content Container */}
-        <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-16 py-12 md:py-0 grid md:grid-cols-2 gap-8 md:gap-16 items-center">
+        <div className="relative z-10 w-full px-6 md:px-12 py-6 md:py-10">
+          <div className="grid md:grid-cols-2 gap-6 md:gap-12 items-center">
           {/* Left Side - Text Content */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="space-y-8"
+            className="space-y-10"
           >
             {/* Badge */}
             <motion.div 
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-brand-100 to-white backdrop-blur-sm border-2 border-brand-300 rounded-full w-fit shadow-lg shadow-brand-400/20"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-brand-100 to-white backdrop-blur-sm border-2 border-brand-400 rounded-full w-fit shadow-xl shadow-brand-400/40"
             >
               <motion.div animate={{ rotate: 360 }} transition={{ duration: 3, repeat: Infinity }}>
                 <Sparkles className="w-4 h-4 text-brand-600" />
               </motion.div>
-              <span className="text-sm font-bold bg-gradient-to-r from-brand-600 to-brand-700 bg-clip-text text-transparent">Nền tảng AI tuyên dụng thông minh</span>
+              <span className="text-sm font-bold bg-gradient-to-r from-brand-600 to-brand-700 bg-clip-text text-transparent">Nền tảng AI tuyển dụng thông minh</span>
             </motion.div>
-
             {/* Main Heading */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
@@ -68,7 +99,7 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="space-y-6"
             >
-              <h1 className="text-5xl md:text-6xl font-bold text-slate-900 leading-[1.4]">
+              <h1 className="text-6xl md:text-7xl font-black text-slate-900 leading-[1.2] tracking-tight drop-shadow-lg">
                 <motion.span
                   key={user ? 'logged-in' : 'logged-out'}
                   initial={{ opacity: 0, y: 10 }}
@@ -76,7 +107,7 @@ export default function Home() {
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.4 }}
                 >
-                  {user ? 'Chào mừng bạn!' : 'Sẵn sàng'} <br />
+                  {user ? 'Chào mừng bạn' : 'Sẵn sàng'} <br />
                   <span className="bg-gradient-to-r from-teal-600 to-cyan-500 bg-clip-text text-transparent block py-2">
                     {user ? 'quay lại!' : 'bắt đầu?'}
                   </span>
@@ -88,28 +119,41 @@ export default function Home() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.4, delay: 0.1 }}
-                className="text-lg text-slate-600 leading-relaxed max-w-lg"
+                className="text-xl text-slate-700 font-semibold leading-relaxed max-w-xl drop-shadow-md"
+                style={{ fontSize: '18px', lineHeight: '1.8' }}
               >
                 {user ? 'Khám phá các tính năng mạnh mẽ của QATTH để phát triển sự nghiệp' : 'Quét CV thông minh, gợi ý nghề phù hợp, chatbot tư vấn và mô phỏng phỏng vấn bằng giọng nói. Tất cả trên một giao diện hiện đại và dễ sử dụng.'}
               </motion.p>
             </motion.div>
 
-            {/* CTA Buttons - Only show if not logged in */}
+            {/* Stats Cards */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: !user ? 1 : 0, y: !user ? 0 : 20 }}
-              exit={{ opacity: 0, y: 20 }}
-              transition={{ duration: 0.4, delay: 0.4 }}
-              className={!user ? "flex flex-col sm:flex-row items-start gap-4 pt-4" : "hidden"}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              className="grid grid-cols-2 gap-4 pt-8"
             >
-              <motion.button 
-                onClick={() => openAuthModal('login')}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-3 bg-white backdrop-blur-sm text-brand-700 font-bold rounded-lg border-2 border-brand-400 hover:border-brand-500 shadow-lg shadow-brand-400/20 transition-all duration-300"
-              >
-                Đăng nhập
-              </motion.button>
+              {[
+                { icon: Users, number: '10.000+', label: 'Người dùng', color: 'text-blue-600' },
+                { icon: TrendingUp, number: '95%', label: 'Thành công', color: 'text-green-600' },
+                { icon: Clock, number: '24/7', label: 'Hỗ trợ', color: 'text-purple-600' },
+                { icon: Handshake, number: '200+', label: 'Đôi tác', color: 'text-yellow-600' }
+              ].map((stat, i) => {
+                const Icon = stat.icon
+                return (
+                  <motion.div
+                    key={i}
+                    whileHover={{ y: -5 }}
+                    className="p-4 bg-white/50 backdrop-blur-sm border-2 border-brand-300 rounded-lg shadow-xl hover:shadow-2xl transition-all"
+                  >
+                    <div className="flex items-center gap-2 mb-2">
+                      <Icon className={`w-5 h-5 ${stat.color}`} />
+                      <div className="text-xl md:text-2xl font-bold text-brand-600">{stat.number}</div>
+                    </div>
+                    <div className="text-sm text-slate-600">{stat.label}</div>
+                  </motion.div>
+                )
+              })}
             </motion.div>
           </motion.div>
 
@@ -167,7 +211,7 @@ export default function Home() {
               <motion.div
                 animate={{ rotate: -360 }}
                 transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-12"
+                className="absolute inset-16"
               >
                 <motion.button
                   onClick={() => {
@@ -184,6 +228,30 @@ export default function Home() {
                   {/* Planet shine */}
                   <div className="absolute top-1 left-1 w-2 h-2 bg-white rounded-full opacity-60" />
                   <Workflow className="w-5 h-5 text-white group-hover:scale-125 transition-transform relative z-10" />
+                </motion.button>
+              </motion.div>
+
+              {/* Planet 3 - Pricing */}
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-8"
+              >
+                <motion.button
+                  onClick={() => {
+                    const element = document.getElementById('pricing')
+                    if (element) element.scrollIntoView({ behavior: 'smooth' })
+                  }}
+                  whileHover={{ scale: 1.3 }}
+                  whileTap={{ scale: 0.9 }}
+                  className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-8 bg-gradient-to-br from-amber-300 via-orange-500 to-orange-700 rounded-full shadow-2xl shadow-orange-500/70 flex items-center justify-center hover:shadow-orange-500/90 transition-all duration-300 cursor-pointer group z-30 pointer-events-auto border-2 border-amber-300/50"
+                  title="Bảng giá"
+                >
+                  {/* Planet surface */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-orange-900/30 to-amber-400/10 rounded-full" />
+                  {/* Planet shine */}
+                  <div className="absolute top-1 left-1 w-2 h-2 bg-white rounded-full opacity-60" />
+                  <DollarSign className="w-4 h-4 text-white group-hover:scale-125 transition-transform relative z-10" />
                 </motion.button>
               </motion.div>
 
@@ -206,6 +274,7 @@ export default function Home() {
               </motion.button>
             </div>
           </motion.div>
+          </div>
         </div>
       </section>
       {/* Featured Features Section */}
@@ -214,7 +283,7 @@ export default function Home() {
           <div className="inline-block px-4 py-2 bg-brand-100 rounded-full">
             <span className="text-sm font-semibold text-brand-600">Tính năng</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900">Tính năng nổi bật</h2>
+          <h2 className="text-5xl md:text-6xl font-bold text-slate-900 leading-[1.2] mb-4">Tính năng nổi bật</h2>
           <p className="text-slate-600 max-w-2xl mx-auto text-lg">Những công cụ mạnh mẽ được thiết kế để giúp bạn thành công</p>
         </div>
 
@@ -258,7 +327,7 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
               whileHover={{ y: -5, boxShadow: '0 25px 50px -12px rgba(147, 51, 234, 0.15)' }}
-              className="card flex gap-6 items-start hover:shadow-lg transition-all duration-300 bg-white border border-brand-200/50 hover:border-brand-300"
+              className="card flex gap-6 items-start hover:shadow-lg transition-all duration-300 bg-white border border-brand-200/50 hover:border-brand-300 hover:bg-brand-50/50"
             >
               <motion.div className="text-brand-600 flex-shrink-0 mt-1" animate={{ scale: [1, 1.1, 1] }} transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}>
                 {feature.icon}
@@ -345,9 +414,122 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Chatbot Section Anchor */}
-      <section id="chatbot" className="h-0" />
+      {/* Pricing Section */}
+      <section id="pricing" className="space-y-12 py-20">
+        <div className="text-center space-y-3">
+          <div className="inline-block px-4 py-2 bg-brand-100 rounded-full">
+            <span className="text-sm font-semibold text-brand-600">Bảng giá</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-900">Chọn gói phù hợp với bạn</h2>
+          <p className="text-slate-600 max-w-2xl mx-auto text-lg">Bắt đầu miễn phí, nâng cấp khi bạn cần thêm tính năng</p>
+        </div>
 
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {[
+            {
+              name: 'Free',
+              price: '0',
+              description: 'Hoàn toàn miễn phí',
+              features: [
+                'Quét CV 1 lần/tháng',
+                'Gợi ý nghề cơ bản',
+                'Chatbot hỗ trợ cơ bản',
+                'Không giới hạn xem việc làm'
+              ],
+              highlighted: false
+            },
+            {
+              name: 'Medium',
+              price: '59,000',
+              description: 'Cho những người tìm việc nghiêm túc',
+              features: [
+                'Quét CV 10 lần/tháng',
+                'Gợi ý nghề nâng cao',
+                'Chatbot AI thông minh',
+                'Mô phỏng phỏng vấn 5 lần',
+                'Ưu tiên hỗ trợ',
+                'Báo cáo chi tiết'
+              ],
+              highlighted: true
+            },
+            {
+              name: 'Pro',
+              price: '139,000',
+              description: 'Cho những người muốn thành công',
+              features: [
+                'Quét CV không giới hạn',
+                'Gợi ý nghề cá nhân hóa',
+                'Chatbot AI 24/7',
+                'Mô phỏng phỏng vấn không giới hạn',
+                'Hỗ trợ ưu tiên cao',
+                'Báo cáo chi tiết + phân tích',
+                'Tư vấn 1-1 hàng tháng'
+              ],
+              highlighted: false
+            }
+          ].map((plan, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className={`relative rounded-2xl p-8 transition-all ${
+                plan.highlighted
+                  ? 'bg-gradient-to-br from-brand-500 to-brand-700 text-white shadow-2xl shadow-brand-500/30 scale-105'
+                  : 'bg-white border border-brand-200/50 hover:border-brand-300 hover:shadow-lg'
+              }`}
+            >
+              {plan.highlighted && (
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-yellow-400 text-slate-900 text-sm font-bold rounded-full">
+                  Phổ biến nhất
+                </div>
+              )}
+              
+              <div className="space-y-4 mb-6">
+                <h3 className={`text-2xl font-bold ${plan.highlighted ? 'text-white' : 'text-slate-900'}`}>
+                  {plan.name}
+                </h3>
+                <p className={`text-sm ${plan.highlighted ? 'text-white/80' : 'text-slate-600'}`}>
+                  {plan.description}
+                </p>
+                <div className="flex items-baseline gap-1">
+                  <span className={`text-4xl font-bold ${plan.highlighted ? 'text-white' : 'text-brand-600'}`}>
+                    {plan.price === '0' ? 'Miễn phí' : `${plan.price}đ`}
+                  </span>
+                  {plan.price !== '0' && (
+                    <span className={`text-sm ${plan.highlighted ? 'text-white/70' : 'text-slate-600'}`}>
+                      /tháng
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => openAuthModal('register')}
+                className={`w-full py-3 rounded-lg font-semibold transition-all mb-6 ${
+                  plan.highlighted
+                    ? 'bg-white text-brand-600 hover:bg-slate-100'
+                    : 'bg-brand-500 text-white hover:bg-brand-600'
+                }`}
+              >
+                {plan.price === '0' ? 'Bắt đầu miễn phí' : 'Nâng cấp ngay'}
+              </motion.button>
+
+              <ul className="space-y-3">
+                {plan.features.map((feature, idx) => (
+                  <li key={idx} className={`flex items-start gap-3 text-sm ${plan.highlighted ? 'text-white/90' : 'text-slate-700'}`}>
+                    <span className={`text-lg mt-0.5 ${plan.highlighted ? 'text-yellow-300' : 'text-brand-500'}`}>✓</span>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
+        </div>
+      </section>
     </div>
   )
 }

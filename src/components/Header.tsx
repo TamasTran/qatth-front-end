@@ -2,9 +2,8 @@ import { useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAuth } from '../store/auth'
-import { 
-  FileText, MessageCircle, Video, Briefcase, 
-  LogIn, LogOut, User, UserPlus, FileUp, Menu, X
+import {  
+ LogOut, User, Menu, X, Wallet, Plus, Crown, CircleStop
 } from 'lucide-react'
 
 type HeaderProps = {
@@ -16,13 +15,17 @@ export function Header({ onAuthClick }: HeaderProps) {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
 
+  const handleRecharge = () => {
+    navigate('/recharge')
+  }
+
   const mainNavItems = [
     { to: '/', label: 'Trang chủ' },
-    { to: '/cv-scanner', label: 'Quét CV' },
     { to: '/cv-builder', label: 'Tạo CV' },
+    { to: '/jobs', label: 'Tuyển dụng' },
+    { to: '/cv-scanner', label: 'Quét CV' },
     { to: '/chatbot', label: 'Chatbot CV' },
     { to: '/interview', label: 'Phỏng vấn' },
-    { to: '/jobs', label: 'Tuyển dụng' },
   ]
 
   const handleAuthClick = (mode: 'login' | 'register') => {
@@ -42,7 +45,7 @@ export function Header({ onAuthClick }: HeaderProps) {
 
   return (
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-brand-200/30 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 py-4">
+      <div className="w-full px-6 md:px-12 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 flex-shrink-0">
@@ -92,12 +95,35 @@ export function Header({ onAuthClick }: HeaderProps) {
               </div>
             ) : (
               <div className="hidden sm:flex items-center gap-3">
+                {/* Balance Section */}
+                <div className="flex items-center gap-2 px-3 py-2 bg-brand-50 rounded-lg border border-brand-200">
+                  <Wallet size={18} className="text-brand-600" />
+                  <span className="text-sm font-semibold text-brand-600">0đ</span>
+                  <button
+                    onClick={handleRecharge}
+                    className="p-1 hover:bg-brand-100 rounded transition-colors"
+                    title="Nạp tiền"
+                  >
+                    <Plus size={16} className="text-brand-600" />
+                  </button>
+                </div>
+
                 <Link
                   to="/profile"
                   className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-brand-50 rounded-lg transition-colors"
                 >
                   <User size={18} />
                   <span className="hidden md:inline">{user.fullName}</span>
+                  {user.plan === 'pro' && (
+                    <div title="Pro Plan">
+                      <Crown size={16} className="text-yellow-500" />
+                    </div>
+                  )}
+                  {user.plan === 'medium' && (
+                    <div title="Medium Plan">
+                      <CircleStop size={16} className="text-blue-500" />
+                    </div>
+                  )}
                 </Link>
                 <button
                   onClick={handleLogout}
@@ -167,6 +193,19 @@ export function Header({ onAuthClick }: HeaderProps) {
                   </>
                 ) : (
                   <>
+                    {/* Mobile Balance Section */}
+                    <div className="flex items-center gap-2 px-4 py-2 bg-brand-50 rounded-lg border border-brand-200">
+                      <Wallet size={18} className="text-brand-600" />
+                      <span className="text-sm font-semibold text-brand-600">0đ</span>
+                      <button
+                        onClick={handleRecharge}
+                        className="p-1 hover:bg-brand-100 rounded transition-colors ml-auto"
+                        title="Nạp tiền"
+                      >
+                        <Plus size={16} className="text-brand-600" />
+                      </button>
+                    </div>
+
                     <Link
                       to="/profile"
                       onClick={() => setIsMobileMenuOpen(false)}
