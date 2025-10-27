@@ -187,7 +187,7 @@ export default function Home() {
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-0"
+                className="absolute inset-0 pointer-events-none"
               >
                 <motion.button
                   onClick={() => {
@@ -211,7 +211,7 @@ export default function Home() {
               <motion.div
                 animate={{ rotate: -360 }}
                 transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-16"
+                className="absolute inset-16 pointer-events-none"
               >
                 <motion.button
                   onClick={() => {
@@ -220,14 +220,14 @@ export default function Home() {
                   }}
                   whileHover={{ scale: 1.3 }}
                   whileTap={{ scale: 0.9 }}
-                  className="absolute top-0 left-1/2 -translate-x-1/2 w-9 h-9 bg-gradient-to-br from-cyan-300 via-cyan-500 to-teal-600 rounded-full shadow-2xl shadow-cyan-500/70 flex items-center justify-center hover:shadow-cyan-500/90 transition-all duration-300 cursor-pointer group z-20 pointer-events-auto border-2 border-cyan-300/50"
+                  className="absolute top-0 left-1/2 -translate-x-1/2 w-9 h-9 bg-gradient-to-br from-cyan-300 via-cyan-500 to-teal-600 rounded-full shadow-2xl shadow-cyan-500/70 flex items-center justify-center hover:shadow-cyan-500/90 transition-all duration-300 cursor-pointer group z-50 pointer-events-auto border-2 border-cyan-300/50"
                   title="Cách thức hoạt động"
                 >
                   {/* Planet surface */}
                   <div className="absolute inset-0 bg-gradient-to-t from-teal-900/30 to-cyan-400/10 rounded-full" />
                   {/* Planet shine */}
                   <div className="absolute top-1 left-1 w-2 h-2 bg-white rounded-full opacity-60" />
-                  <Workflow className="w-5 h-5 text-white group-hover:scale-125 transition-transform relative z-10" />
+                  <Workflow className="w-6 h-6 text-white group-hover:scale-125 transition-transform relative z-10" />
                 </motion.button>
               </motion.div>
 
@@ -235,7 +235,7 @@ export default function Home() {
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-8"
+                className="absolute inset-8 pointer-events-none"
               >
                 <motion.button
                   onClick={() => {
@@ -267,10 +267,23 @@ export default function Home() {
               >
                 {/* Glow effect */}
                 <div className="absolute inset-0 bg-gradient-to-t from-teal-900/30 to-cyan-400/10 rounded-full" />
-                <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 2, repeat: Infinity }} className="flex flex-col items-center gap-1 relative z-10">
-                  <Rocket className="w-9 h-9 text-white group-hover:scale-125 transition-transform drop-shadow-lg" />
-                  <span className="text-xs font-bold text-white whitespace-nowrap drop-shadow-md">Start</span>
-                </motion.div>
+                <div className="flex flex-col items-center gap-1 relative z-10">
+                  <motion.div
+                    animate={{ 
+                      scale: [1, 1.2, 1],
+                      y: [0, -12, 0],
+                      opacity: [1, 0.8, 1],
+                    }}
+                    transition={{ 
+                      duration: 2.5,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    <Rocket className="w-9 h-9 text-white group-hover:scale-125 transition-transform drop-shadow-lg" />
+                  </motion.div>
+                  <span className="text-sm font-bold text-white whitespace-nowrap drop-shadow-md">Start</span>
+                </div>
               </motion.button>
             </div>
           </motion.div>
@@ -342,7 +355,7 @@ export default function Home() {
       </section>
 
       {/* How it Works Section */}
-      <section id="howitwork" className="space-y-12">
+      <section id="howitwork" className="space-y-12 pt-20">
         <div className="text-center space-y-3">
           <div className="inline-block px-4 py-2 bg-brand-100 rounded-full">
             <span className="text-sm font-semibold text-brand-600">Quy trình</span>
