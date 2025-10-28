@@ -15,6 +15,7 @@ import Chatbot from './pages/Chatbot'
 import Interview from './pages/Interview'
 import Profile from './pages/Profile'
 import Recharge from './pages/Recharge'
+import Pricing from './pages/Pricing'
 import { ProtectedRoute } from './shell/ProtectedRoute'
 
 const router = createBrowserRouter([
@@ -32,6 +33,7 @@ const router = createBrowserRouter([
       { path: 'jobs/:id', element: <ProtectedRoute><JobDetail /></ProtectedRoute> },
       { path: 'interview', element: <ProtectedRoute><Interview /></ProtectedRoute> },
       { path: 'profile', element: <ProtectedRoute><Profile /></ProtectedRoute> },
+      { path: 'pricing', element: <Pricing /> },
       { path: 'recharge', element: <ProtectedRoute><Recharge /></ProtectedRoute> },
     ]
   }

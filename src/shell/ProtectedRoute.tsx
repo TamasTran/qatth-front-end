@@ -32,13 +32,18 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!user && !hasCalledModal.current) {
       hasCalledModal.current = true
-      // Set callback to navigate home when modal closes
-      setAuthModalOnClose(() => {
-        navigate('/')
-      })
-      openAuthModal('login')
+      // If trying to access recharge, redirect to pricing instead
+      if (location.pathname === '/recharge') {
+        navigate('/pricing')
+      } else {
+        // Set callback to navigate home when modal closes
+        setAuthModalOnClose(() => {
+          navigate('/')
+        })
+        openAuthModal('login')
+      }
     }
-  }, [user, openAuthModal, setAuthModalOnClose, navigate])
+  }, [user, openAuthModal, setAuthModalOnClose, navigate, location.pathname])
 
   if (!user) {
     return null

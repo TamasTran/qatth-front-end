@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { MessageCircle, X, Phone, Mail, MessageSquare, Facebook } from 'lucide-react'
+import { Share2, Phone, Mail, MessageSquare, Facebook, Twitter, Instagram, Linkedin, Youtube, Github } from 'lucide-react'
 import { Header } from '../components/Header'
 import { AuthModal } from '../components/AuthModal'
 
@@ -14,14 +14,25 @@ export function AppLayout() {
   const [authModalOnClose, setAuthModalOnClose] = useState<(() => void) | null>(null)
   const [showContactBubble, setShowContactBubble] = useState(true)
   const [showContactMenu, setShowContactMenu] = useState(false)
-  const [currentContactIcon, setCurrentContactIcon] = useState(0)
-  
+  const [currentIconIndex, setCurrentIconIndex] = useState(0)
+
   const contactOptions = [
-    { icon: Phone, label: 'Phone', link: 'tel:+84912345678', color: 'from-blue-400 to-blue-600' },
-    { icon: Mail, label: 'Email', link: 'mailto:contact@qatth.com', color: 'from-red-400 to-red-600' },
-    { icon: MessageSquare, label: 'Zalo', link: 'https://zalo.me/your-id', color: 'from-cyan-400 to-cyan-600' },
-    { icon: Facebook, label: 'Facebook', link: 'https://facebook.com/your-page', color: 'from-blue-500 to-blue-700' }
+    { icon: Twitter, label: 'Twitter', link: 'https://www.facebook.com/tamas7504/', bgColor: 'bg-blue-400' },
+    { icon: MessageSquare, label: 'WhatsApp', link: 'https://www.facebook.com/tamas7504/', bgColor: 'bg-green-400' },
+    { icon: Mail, label: 'Email', link: 'https://www.facebook.com/tamas7504/', bgColor: 'bg-red-400' },
+    { icon: Facebook, label: 'Facebook', link: 'https://www.facebook.com/tamas7504/', bgColor: 'bg-blue-600' },
+    { icon: Linkedin, label: 'LinkedIn', link: 'https://www.facebook.com/tamas7504/', bgColor: 'bg-blue-500' },
+    { icon: Youtube, label: 'YouTube', link: 'https://www.facebook.com/tamas7504/', bgColor: 'bg-red-500' },
+    { icon: Github, label: 'GitHub', link: 'https://www.facebook.com/tamas7504/', bgColor: 'bg-gray-800' },
+    { icon: Instagram, label: 'Instagram', link: 'https://www.facebook.com/tamas7504/', bgColor: 'bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400'}
   ]
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIconIndex((prev) => (prev + 1) % contactOptions.length)
+    }, 2000)
+    return () => clearInterval(interval)
+  }, [])
 
   const openAuthModal = (mode: 'login' | 'register') => {
     setAuthModal({ isOpen: true, mode })
@@ -39,13 +50,6 @@ export function AppLayout() {
   const switchAuthMode = (mode: 'login' | 'register') => {
     setAuthModal({ isOpen: true, mode })
   }
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentContactIcon((prev) => (prev + 1) % contactOptions.length)
-    }, 3000)
-    return () => clearInterval(interval)
-  }, [contactOptions.length])
 
   return (
     <div className="flex flex-col min-h-screen bg-[linear-gradient(60deg,#E0F2FE_0%,#F0F9FF_40%,#F8FAFC_100%)]">
@@ -70,64 +74,74 @@ export function AppLayout() {
         onSwitchMode={switchAuthMode}
       />
 
-      {/* Floating Contact Bubble */}
+      {/* Floating Contact Bubble - Bottom Right */}
       {showContactBubble && (
         <motion.div
-          initial={{ opacity: 0, scale: 0.8, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.8, y: 20 }}
-          transition={{ duration: 0.4 }}
-          className="fixed bottom-8 right-8 z-40"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.8 }}
+          transition={{ duration: 1 }}
+          className="fixed bottom-0 right-0 z-40 pointer-events-none"
         >
-          {/* Contact Menu */}
-          {showContactMenu && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.3 }}
-              className="absolute bottom-20 right-0 flex flex-col gap-3"
-            >
-              {contactOptions.map((option, idx) => {
-                const Icon = option.icon
-                return (
-                  <motion.a
-                    key={idx}
-                    href={option.link}
-                    target={option.label !== 'Phone' && option.label !== 'Email' ? '_blank' : undefined}
-                    rel="noopener noreferrer"
-                    className={`flex items-center justify-center w-14 h-14 bg-gradient-to-br ${option.color} rounded-full shadow-lg hover:shadow-xl transition-all text-white group`}
-                    whileHover={{ scale: 1.1, y: -5 }}
-                    whileTap={{ scale: 0.95 }}
-                    title={option.label}
-                  >
-                    <Icon className="w-6 h-6 group-hover:scale-125 transition-transform" />
-                  </motion.a>
-                )
-              })}
-            </motion.div>
-          )}
-
-          {/* Main Contact Button - Icon Only */}
-          <motion.button
-            onClick={() => setShowContactMenu(!showContactMenu)}
-            className={`flex items-center justify-center w-16 h-16 bg-gradient-to-br from-slate-300 via-slate-400 to-slate-600 rounded-full shadow-2xl shadow-slate-400/40 hover:shadow-slate-400/60 transition-all text-white group`}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
+          {/* Contact Menu - Circular Layout */}
+          <div 
+            className="absolute bottom-0 right-0 w-40 h-40 flex items-center justify-end pr-16 pb-12 pointer-events-auto"
+            onMouseEnter={() => setShowContactMenu(true)}
+            onMouseLeave={() => setShowContactMenu(false)}
           >
-            <motion.div
-              key={currentContactIcon}
-              initial={{ scale: 0, rotate: -180 }}
-              animate={{ scale: 1, rotate: 0 }}
-              exit={{ scale: 0, rotate: 180 }}
-              transition={{ duration: 0.4 }}
+            {/* Social Icons arranged in circle */}
+            {showContactMenu && contactOptions.map((option, idx) => {
+              const Icon = option.icon
+              const angle = (idx / contactOptions.length) * 360
+              const radius = 55
+              const x = radius * Math.cos((angle - 90) * (Math.PI / 180))
+              const y = radius * Math.sin((angle - 90) * (Math.PI / 180))
+              
+              return (
+                <motion.a
+                  key={idx}
+                  href={option.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setTimeout(() => setShowContactMenu(false), 200)
+                  }}
+                  initial={{ opacity: 0, scale: 0.3, x: 0, y: 0 }}
+                  animate={{ opacity: 1, scale: 1, x, y }}
+                  exit={{ opacity: 0, scale: 0, x: 0, y: 0 }}
+                  transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+                  className={`absolute flex items-center justify-center w-10 h-10 ${option.bgColor} rounded-full shadow-sm hover:shadow-md transition-all text-white group border-2 border-white pointer-events-auto cursor-pointer`}
+                  whileHover={{ scale: 1.15 }}
+                  whileTap={{ scale: 0.95 }}
+                  title={option.label}
+                >
+                  <Icon className="w-4 h-4 group-hover:scale-125 transition-transform" />
+                </motion.a>
+              )
+            })}
+
+            {/* Main Contact Button - Changing Icon & Color (Center) */}
+            <motion.button
+              className={`relative flex items-center justify-center w-12 h-12 ${contactOptions[currentIconIndex].bgColor} rounded-full shadow-sm hover:shadow-md transition-all text-white group border-2 border-white z-10 pointer-events-auto`}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
             >
-              {(() => {
-                const CurrentIcon = contactOptions[currentContactIcon].icon
-                return <CurrentIcon className="w-7 h-7 group-hover:scale-125 transition-transform" />
-              })()}
-            </motion.div>
-          </motion.button>
+              <motion.div
+                key={currentIconIndex}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.3 }}
+              >
+                {(() => {
+                  const CurrentIcon = contactOptions[currentIconIndex].icon
+                  return <CurrentIcon className="w-5 h-5 group-hover:scale-125 transition-transform" />
+                })()}
+              </motion.div>
+            </motion.button>
+          </div>
+
         </motion.div>
       )}
     </div>

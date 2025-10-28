@@ -1,6 +1,6 @@
 
 import { motion } from 'framer-motion'
-import { useOutletContext } from 'react-router-dom'
+import { useOutletContext, useNavigate } from 'react-router-dom'
 import { useState, useEffect, useMemo } from 'react'
 import { FileSearch, MessageSquare, Mic, User, Upload, Sparkles, Rocket, ArrowRight, Zap, Brain, Target, Workflow, Lightbulb, Users, TrendingUp, Clock, Handshake, DollarSign } from 'lucide-react'
 import { useAuth } from '../store/auth'
@@ -25,6 +25,7 @@ const generateStars = () => {
 export default function Home() {
   const { user } = useAuth()
   const { openAuthModal } = useOutletContext<OutletContextType>()
+  const navigate = useNavigate()
   const [viewportWidth, setViewportWidth] = useState(1500)
   const stars = useMemo(() => generateStars(), [])
 
@@ -521,7 +522,13 @@ export default function Home() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => openAuthModal('register')}
+                onClick={() => {
+                  if (plan.price === '0') {
+                    openAuthModal('register')
+                  } else {
+                    navigate('/pricing')
+                  }
+                }}
                 className={`w-full py-3 rounded-lg font-semibold transition-all mb-6 ${
                   plan.highlighted
                     ? 'bg-white text-brand-600 hover:bg-slate-100'
