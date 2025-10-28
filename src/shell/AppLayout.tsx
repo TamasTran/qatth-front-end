@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Share2, Phone, Mail, MessageSquare, Facebook, Twitter, Instagram, Linkedin, Youtube, Github } from 'lucide-react'
+import { Mail, Facebook, Twitter, Instagram, Linkedin, Youtube } from 'lucide-react'
 import { Header } from '../components/Header'
 import { AuthModal } from '../components/AuthModal'
 
@@ -18,12 +18,10 @@ export function AppLayout() {
 
   const contactOptions = [
     { icon: Twitter, label: 'Twitter', link: 'https://www.facebook.com/tamas7504/', bgColor: 'bg-blue-400' },
-    { icon: MessageSquare, label: 'WhatsApp', link: 'https://www.facebook.com/tamas7504/', bgColor: 'bg-green-400' },
     { icon: Mail, label: 'Email', link: 'https://www.facebook.com/tamas7504/', bgColor: 'bg-red-400' },
     { icon: Facebook, label: 'Facebook', link: 'https://www.facebook.com/tamas7504/', bgColor: 'bg-blue-600' },
     { icon: Linkedin, label: 'LinkedIn', link: 'https://www.facebook.com/tamas7504/', bgColor: 'bg-blue-500' },
     { icon: Youtube, label: 'YouTube', link: 'https://www.facebook.com/tamas7504/', bgColor: 'bg-red-500' },
-    { icon: Github, label: 'GitHub', link: 'https://www.facebook.com/tamas7504/', bgColor: 'bg-gray-800' },
     { icon: Instagram, label: 'Instagram', link: 'https://www.facebook.com/tamas7504/', bgColor: 'bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400'}
   ]
 
@@ -52,7 +50,7 @@ export function AppLayout() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-[linear-gradient(60deg,#E0F2FE_0%,#F0F9FF_40%,#F8FAFC_100%)]">
+    <div className="flex flex-col min-h-screen bg-[linear-gradient(60deg,#E0F2FE_0%,#F0F9FF_40%,#F8FAFC_100%)] overflow-x-hidden">
       <div className="fixed inset-0 -z-10 bg-radial-fade pointer-events-none" />
       <Header onAuthClick={openAuthModal} />
       <motion.main

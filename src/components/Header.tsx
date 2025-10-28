@@ -44,7 +44,7 @@ export function Header({ onAuthClick }: HeaderProps) {
   }
 
   return (
-    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-brand-200/30 shadow-sm">
+    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-brand-200/30 shadow-xl">
       <div className="w-full px-6 md:px-12 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
