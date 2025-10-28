@@ -98,7 +98,7 @@ export function Header({ onAuthClick }: HeaderProps) {
                 {/* Balance Section */}
                 <div className="flex items-center gap-2 px-3 py-2 bg-brand-50 rounded-lg border border-brand-200">
                   <Wallet size={18} className="text-brand-600" />
-                  <span className="text-sm font-semibold text-brand-600">0đ</span>
+                  <span className="text-sm font-semibold text-brand-600">{user.balance?.toLocaleString()}đ</span>
                   <button
                     onClick={handleRecharge}
                     className="p-1 hover:bg-brand-100 rounded transition-colors"
