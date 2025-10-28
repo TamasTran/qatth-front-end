@@ -526,7 +526,11 @@ export default function Home() {
                   if (plan.price === '0') {
                     openAuthModal('register')
                   } else {
-                    navigate('/pricing')
+                    if (!user) {
+                      openAuthModal('login')
+                    } else {
+                      navigate('/pricing')
+                    }
                   }
                 }}
                 className={`w-full py-3 rounded-lg font-semibold transition-all mb-6 ${
