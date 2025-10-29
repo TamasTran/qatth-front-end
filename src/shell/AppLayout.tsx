@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Mail, Facebook, Twitter, Instagram, Linkedin, Youtube } from 'lucide-react'
+import {SiX, SiGmail,SiFacebook,SiLinkedin,SiYoutube,SiInstagram} from "react-icons/si";
 import { Header } from '../components/Header'
 import { AuthModal } from '../components/AuthModal'
 
@@ -17,13 +17,13 @@ export function AppLayout() {
   const [currentIconIndex, setCurrentIconIndex] = useState(0)
 
   const contactOptions = [
-    { icon: Twitter, label: 'Twitter', link: 'https://www.facebook.com/tamas7504/', bgColor: 'bg-blue-400' },
-    { icon: Mail, label: 'Email', link: 'https://www.facebook.com/tamas7504/', bgColor: 'bg-red-400' },
-    { icon: Facebook, label: 'Facebook', link: 'https://www.facebook.com/tamas7504/', bgColor: 'bg-blue-600' },
-    { icon: Linkedin, label: 'LinkedIn', link: 'https://www.facebook.com/tamas7504/', bgColor: 'bg-blue-500' },
-    { icon: Youtube, label: 'YouTube', link: 'https://www.facebook.com/tamas7504/', bgColor: 'bg-red-500' },
-    { icon: Instagram, label: 'Instagram', link: 'https://www.facebook.com/tamas7504/', bgColor: 'bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400'}
-  ]
+  {icon: SiX,label: "X (Twitter)",link: "https://x.com/tamas7504",bgColor: "bg-black",},
+  {icon: SiGmail,label: "Email",link: "mailto:tamas7504@gmail.com",bgColor: "bg-red-400",},
+  {icon: SiFacebook,label: "Facebook",link: "https://www.facebook.com/tamas7504/",bgColor: "bg-blue-600",},
+  {icon: SiLinkedin,label: "LinkedIn",link: "https://www.linkedin.com/in/tamas7504/",bgColor: "bg-blue-500",},
+  {icon: SiYoutube,label: "YouTube",link: "https://www.youtube.com/@tamas7504",bgColor: "bg-red-500",},
+  {icon: SiInstagram,label: "Instagram",link: "https://www.instagram.com/tamas7504/",bgColor: "bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400",},
+  ];
 
   useEffect(() => {
     const interval = setInterval(() => {
