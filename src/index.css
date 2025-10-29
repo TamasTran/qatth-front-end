@@ -55,3 +55,12 @@ nav a .btn-text {
 nav a:hover .btn-text {
   display: inline;
 }
+
+@keyframes rotate-reverse {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+.animate-rotate-reverse {
+  animation: rotate-reverse 15s linear infinite;
+}
