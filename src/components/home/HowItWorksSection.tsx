@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { memo } from 'react'
 import { User, Upload, Sparkles, Rocket, ArrowRight } from 'lucide-react'
 
 const steps = [
@@ -28,9 +29,9 @@ const steps = [
   }
 ]
 
-export default function HowItWorksSection() {
+function HowItWorksSection() {
   return (
-    <section id="howitwork" className="relative -mt-16 pt-16 mx-[calc(50%-50vw)] w-screen max-w-[100vw] overflow-hidden space-y-12 py-20 bg-gradient-to-b from-blue-50 via-white to-violet-40">
+    <section id="howitwork" className="relative -mt-16 pt-16 mx-[calc(50%-50vw)] w-screen max-w-[100vw] overflow-hidden space-y-12 py-20 bg-gradient-to-b from-slate-50 to-white">
       <div className="text-center space-y-3">
         <div className="inline-block px-4 py-2 bg-gradient-to-r from-blue-100 to-blue-200 rounded-full">
           <span className="text-sm font-semibold text-blue-700">Quy trình</span>
@@ -49,7 +50,7 @@ export default function HowItWorksSection() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: i * 0.1 }}
+            transition={{ duration: 0.3 }}
             className="relative"
           >
             <div className="card h-full flex flex-col items-center text-center gap-4 bg-white hover:shadow-lg transition-shadow">
@@ -82,3 +83,5 @@ export default function HowItWorksSection() {
     </section>
   )
 }
+
+export default memo(HowItWorksSection)

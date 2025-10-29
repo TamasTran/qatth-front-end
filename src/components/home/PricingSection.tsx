@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { memo } from 'react'
 import { useOutletContext, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../store/auth'
 
@@ -68,13 +69,13 @@ const pricingPlans = [
   }
 ]
 
-export default function PricingSection() {
+function PricingSection() {
   const { user } = useAuth()
   const { openAuthModal } = useOutletContext<OutletContextType>()
   const navigate = useNavigate()
 
   return (
-    <section id="pricing" className=" relative -mt-16 pt-16 mx-[calc(50%-50vw)] w-screen max-w-[100vw] overflow-hidden space-y-12 py-20 bg-gradient-to-b from-violet-40 via-white to-cyan-30/30">
+    <section id="pricing" className=" relative -mt-16 pt-16 mx-[calc(50%-50vw)] w-screen max-w-[100vw] overflow-hidden space-y-12 py-20 bg-gradient-to-b from-white to-slate-50">
       <div className="text-center space-y-3">
         <div className="inline-block px-4 py-2 bg-gradient-to-r from-purple-100 to-purple-200 rounded-full">
           <span className="text-sm font-semibold text-purple-700">Bảng giá</span>
@@ -90,11 +91,11 @@ export default function PricingSection() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: i * 0.1 }}
+            transition={{ duration: 0.3 }}
             className={`relative rounded-2xl p-5 transition-all ${
               plan.highlighted
-                ? `bg-gradient-to-br ${plan.bgGradient} border-2 ${plan.borderColor} shadow-2xl shadow-teal-400/60 scale-105`
-                : `bg-gradient-to-br ${plan.bgGradient} border ${plan.borderColor} hover:shadow-lg`
+                ? `bg-gradient-to-br ${plan.bgGradient} border-2 ${plan.borderColor} shadow-lg shadow-teal-400/40 scale-105`
+                : `bg-gradient-to-br ${plan.bgGradient} border ${plan.borderColor} hover:shadow-md`
             }`}
           >
             {plan.highlighted && (
@@ -123,8 +124,8 @@ export default function PricingSection() {
             </div>
 
             <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => {
                 if (plan.price === '0') {
                   openAuthModal('register')
@@ -136,7 +137,7 @@ export default function PricingSection() {
                   }
                 }
               }}
-              className={`w-full py-2.5 rounded-lg font-semibold transition-all mb-3 text-sm text-white shadow-md ${plan.buttonColor}`}
+              className={`w-full py-2.5 rounded-lg font-semibold transition-all mb-3 text-sm text-white shadow-sm ${plan.buttonColor}`}
             >
               {plan.price === '0' ? 'Bắt đầu miễn phí' : 'Nâng cấp ngay'}
             </motion.button>
@@ -155,3 +156,5 @@ export default function PricingSection() {
     </section>
   )
 }
+
+export default memo(PricingSection)

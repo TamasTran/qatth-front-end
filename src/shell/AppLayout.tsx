@@ -30,7 +30,7 @@ export function AppLayout() {
       setCurrentIconIndex((prev) => (prev + 1) % contactOptions.length)
     }, 2000)
     return () => clearInterval(interval)
-  }, [])
+  }, [contactOptions.length])
 
   const openAuthModal = (mode: 'login' | 'register') => {
     setAuthModal({ isOpen: true, mode })
@@ -56,7 +56,7 @@ export function AppLayout() {
       <motion.main
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: .4 }}
+        transition={{ duration: .2 }}
         className="flex-1 mx-auto max-w-7xl w-full px-4 py-8"
       >
         <Outlet context={{ openAuthModal, setAuthModalOnClose }} />
@@ -83,7 +83,7 @@ export function AppLayout() {
         >
           {/* Contact Menu - Circular Layout */}
           <div 
-            className="absolute bottom-0 right-0 w-40 h-40 flex items-center justify-end pr-16 pb-12 pointer-events-auto"
+            className="absolute bottom-0 right-0 w-28 h-28 flex items-center justify-end pr-16 pb-12 pointer-events-auto"
             onMouseEnter={() => setShowContactMenu(true)}
             onMouseLeave={() => setShowContactMenu(false)}
           >

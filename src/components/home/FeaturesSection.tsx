@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { memo } from 'react'
 import { FileSearch, Brain, MessageSquare, Mic, Target, Zap, Star, Sparkles } from 'lucide-react'
 
 const features = [
@@ -46,9 +47,9 @@ const features = [
   }
 ]
 
-export default function FeaturesSection() {
+function FeaturesSection() {
   return (
-    <section id="keyfeatures" className=" relative -mt-16 pt-16 mx-[calc(50%-50vw)] w-screen max-w-[100vw] overflow-hidden space-y-12 py-20 mt-20 bg-gradient-to-b from-brand-100 to-blue-50 border-brand-400/50 shadow-2xl">
+    <section id="keyfeatures" className=" relative -mt-16 pt-16 mx-[calc(50%-50vw)] w-screen max-w-[100vw] overflow-hidden space-y-12 py-20 mt-20 bg-gradient-to-b from-brand-100 to-blue-50 border-brand-400/50 shadow-lg">
       <div className="text-center space-y-3">
         <div className="inline-block px-4 py-2 bg-gradient-to-r from-amber-300 to-orange-300 rounded-full shadow-md">
           <span className="text-sm font-semibold text-amber-950">Web chúng tôi có gì?</span>
@@ -69,8 +70,8 @@ export default function FeaturesSection() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              whileHover={{ y: -5, boxShadow: isHighlighted ? (isJobRecommendation ? '0 25px 50px -12px rgba(59, 130, 246, 0.3)' : '0 25px 50px -12px rgba(236, 72, 153, 0.3)') : '0 25px 50px -12px rgba(147, 51, 234, 0.15)' }}
+              transition={{ duration: 0.3 }}
+              whileHover={{ y: -3 }}
               className={`card flex gap-6 items-start hover:shadow-lg transition-all duration-300 relative ${
                 isHighlighted
                   ? isJobRecommendation
@@ -94,9 +95,9 @@ export default function FeaturesSection() {
                   )}
                 </div>
               )}
-              <motion.div className={`flex-shrink-0 mt-1 ${isHighlighted ? (isJobRecommendation ? 'text-blue-600' : 'text-pink-600') : feature.iconColor}`} animate={{ scale: [1, 1.1, 1] }} transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}>
+              <div className={`flex-shrink-0 mt-1 ${isHighlighted ? (isJobRecommendation ? 'text-blue-600' : 'text-pink-600') : feature.iconColor}`}>
                 {feature.icon}
-              </motion.div>
+              </div>
               <div className="flex-grow">
                 <h3 className={`font-bold text-lg ${isHighlighted ? (isJobRecommendation ? 'text-blue-700' : 'text-pink-700') : 'text-slate-900'}`}>{feature.title}</h3>
                 <p className={`text-sm leading-relaxed ${isHighlighted ? (isJobRecommendation ? 'text-blue-600' : 'text-pink-600') : 'text-slate-600'}`}>{feature.desc}</p>
@@ -108,3 +109,5 @@ export default function FeaturesSection() {
     </section>
   )
 }
+
+export default memo(FeaturesSection)

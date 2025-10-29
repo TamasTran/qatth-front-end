@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { useOutletContext, useNavigate } from 'react-router-dom'
-import { useMemo } from 'react'
+import { memo } from 'react'
 import { Rocket, Users, TrendingUp, Clock, Handshake, Lightbulb, Workflow, DollarSign } from 'lucide-react'
 import { useAuth } from '../../store/auth'
 
@@ -8,24 +8,20 @@ type OutletContextType = {
   openAuthModal: (mode: 'login' | 'register') => void
 }
 
-const generateStars = () => {
-  return [...Array(15)].map((_, i) => {
-    return {
-      id: i,
-      posX: Math.random() * 100,
-      posY: Math.random() * 100,
-      duration: 2.5 + Math.random() * 1,
-      delay: Math.random() * 2,
-      size: 2.5 + Math.random() * 3
-    }
-  })
-}
+const STARS = [...Array(10)].map((_, i) => {
+  return {
+    id: i,
+    posX: Math.random() * 100,
+    posY: Math.random() * 100,
+    duration: 2.5 + Math.random() * 1,
+    delay: Math.random() * 2,
+    size: 2.5 + Math.random() * 2.5
+  }
+})
 
-export default function HeroSection() {
+function HeroSectionContent() {
   const { user } = useAuth()
   const { openAuthModal } = useOutletContext<OutletContextType>()
-  const navigate = useNavigate()
-  const stars = useMemo(() => generateStars(), [])
 
   return (
     <section className="
@@ -39,14 +35,14 @@ export default function HeroSection() {
         shadow-xl
       ">
       <div className="absolute inset-0 overflow-hidden">
-        <motion.div className="absolute top-20 left-10 w-72 h-72 bg-brand-200/20 rounded-full blur-3xl" animate={{ y: [0, 20, 0] }} transition={{ duration: 6, repeat: Infinity }} />
-        <motion.div className="absolute bottom-20 right-10 w-96 h-96 bg-brand-100/15 rounded-full blur-3xl" animate={{ y: [0, -20, 0] }} transition={{ duration: 8, repeat: Infinity }} />
-        <motion.div className="absolute top-1/2 left-1/2 w-80 h-80 bg-brand-200/10 rounded-full blur-3xl" animate={{ scale: [1, 1.1, 1] }} transition={{ duration: 7, repeat: Infinity }} />
+        <motion.div className="absolute top-20 left-10 w-72 h-72 bg-brand-200/20 rounded-full blur-2xl" animate={{ y: [0, 20, 0] }} transition={{ duration: 8, repeat: Infinity }} />
+        <motion.div className="absolute bottom-20 right-10 w-96 h-96 bg-brand-100/15 rounded-full blur-2xl" animate={{ y: [0, -20, 0] }} transition={{ duration: 10, repeat: Infinity }} />
+        <motion.div className="absolute top-1/2 left-1/2 w-80 h-80 bg-brand-200/10 rounded-full blur-2xl" animate={{ scale: [1, 1.08, 1] }} transition={{ duration: 9, repeat: Infinity }} />
       </div>
 
       {/* Stars */}
       <div className="absolute inset-0 overflow-hidden">
-        {stars.map((star) => (
+        {STARS.map((star) => (
           <motion.div
             key={`star-${star.id}`}
             className="absolute bg-yellow-300 rounded-full pointer-events-none"
@@ -55,7 +51,7 @@ export default function HeroSection() {
               top: `${star.posY}%`,
               width: `${star.size}px`,
               height: `${star.size}px`,
-              boxShadow: `0 0 ${star.size * 4}px rgba(253, 224, 71, 1), 0 0 ${star.size * 8}px rgba(253, 224, 71, 0.8), 0 0 ${star.size * 12}px rgba(253, 224, 71, 0.5)`,
+              boxShadow: `0 0 ${star.size * 3}px rgba(253, 224, 71, 0.8)`,
               transform: 'translate(-50%, -50%)'
             }}
             animate={{ 
@@ -78,26 +74,24 @@ export default function HeroSection() {
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.4, delay: 0.05 }}
             className="space-y-4"
           >
             {/* Badge */}
             <motion.div 
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-3 py-1 bg-gradient-to-r from-brand-100 to-white backdrop-blur-sm border-2 border-brand-400 rounded-full w-fit shadow-xl shadow-brand-400/40"
+              transition={{ duration: 0.3, delay: 0.1 }}
+              className="inline-flex items-center gap-2 px-3 py-1 bg-gradient-to-r from-brand-100 to-white backdrop-blur-sm border-2 border-brand-400 rounded-full w-fit shadow-lg shadow-brand-400/30"
             >
-              <motion.div animate={{ rotate: 360 }} transition={{ duration: 3, repeat: Infinity }} style={{ transformOrigin: 'center center', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
-                <span className="text-base">✨</span>
-              </motion.div>
+              <span className="text-base">✨</span>
               <span className="text-xs font-bold bg-gradient-to-r from-brand-600 to-brand-700 bg-clip-text text-transparent">Nền tảng AI tuyển dụng thông minh</span>
             </motion.div>
             {/* Main Heading */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
+              transition={{ duration: 0.4, delay: 0.15 }}
               className="space-y-6"
             >
               <h1 className="text-4xl md:text-5xl font-black text-slate-900 leading-[1.2] tracking-tight drop-shadow-lg">
@@ -106,7 +100,7 @@ export default function HeroSection() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.4 }}
+                  transition={{ duration: 0.2 }}
                 >
                   {user ? 'Chào mừng bạn' : 'Sẵn sàng'} <br />
                   <span className="bg-gradient-to-r from-teal-600 to-cyan-500 bg-clip-text text-transparent block py-2">
@@ -119,7 +113,7 @@ export default function HeroSection() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.4, delay: 0.1 }}
+                transition={{ duration: 0.2, delay: 0.05 }}
                 className="text-base text-slate-700 font-semibold leading-relaxed max-w-xl drop-shadow-md"
                 style={{ fontSize: '14px', lineHeight: '1.6' }}
               >
@@ -131,7 +125,7 @@ export default function HeroSection() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
+              transition={{ duration: 0.4, delay: 0.25 }}
               className="grid grid-cols-2 gap-3 pt-4"
             >
               {[
@@ -145,7 +139,7 @@ export default function HeroSection() {
                   <motion.div
                     key={i}
                     whileHover={{ y: -5 }}
-                    className="p-4 bg-white/50 backdrop-blur-sm border-2 border-brand-300 rounded-lg shadow-xl hover:shadow-2xl transition-all"
+                    className="p-4 bg-white/50 backdrop-blur-sm border-2 border-brand-300 rounded-lg shadow-lg hover:shadow-xl transition-all"
                   >
                     <div className="flex items-center gap-2 mb-2">
                       <Icon className={`w-5 h-5 ${stat.color}`} />
@@ -162,26 +156,26 @@ export default function HeroSection() {
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
             className="relative h-96 md:h-full flex items-center justify-center ml-552"
           >
             {/* Orbiting planets */}
             <div className="relative w-72 h-72 md:w-96 md:h-96">
               {/* Center glow */}
-              <motion.div className="absolute inset-0 bg-gradient-to-r from-teal-500 to-cyan-400 rounded-full blur-3xl opacity-40" animate={{ scale: [1, 1.15, 1] }} transition={{ duration: 5, repeat: Infinity }} />
+              <motion.div className="absolute inset-0 bg-gradient-to-r from-teal-500 to-cyan-400 rounded-full blur-2xl opacity-30" animate={{ scale: [1, 1.1, 1] }} transition={{ duration: 6, repeat: Infinity }} />
               
               {/* Orbit 1 */}
               <motion.div
                 animate={{ rotate: 360 }}
-                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-0 border-2 border-teal-300/30 rounded-full"
+                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-0 border border-teal-300/20 rounded-full"
               />
               
               {/* Orbit 2 */}
               <motion.div
                 animate={{ rotate: -360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-12 border-2 border-cyan-300/25 rounded-full"
+                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-12 border border-cyan-300/15 rounded-full"
               />
 
               {/* Planet 1*/}
@@ -201,7 +195,7 @@ export default function HeroSection() {
                   }}
                   whileHover={{ scale: 1.3 }}
                   whileTap={{ scale: 0.9 }}
-                  className="absolute top-0 left-1/2 -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-teal-300 via-teal-500 to-cyan-700 rounded-full shadow-2xl shadow-teal-500/70 flex items-center justify-center hover:shadow-teal-500/90 transition-all duration-300 cursor-pointer group z-20 pointer-events-auto border-2 border-teal-300/50"
+                  className="absolute top-0 left-1/2 -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-teal-300 via-teal-500 to-cyan-700 rounded-full shadow-lg shadow-teal-500/50 flex items-center justify-center hover:shadow-teal-500/70 transition-all duration-300 cursor-pointer group z-20 pointer-events-auto border border-teal-300/50"
                   title="Tính năng nổi bật"
                 >
                   {/* Planet surface */}
@@ -229,7 +223,7 @@ export default function HeroSection() {
                   }}
                   whileHover={{ scale: 1.3 }}
                   whileTap={{ scale: 0.9 }}
-                  className="absolute top-0 left-1/2 -translate-x-1/2 w-9 h-9 bg-gradient-to-br from-cyan-300 via-cyan-500 to-teal-600 rounded-full shadow-2xl shadow-cyan-500/70 flex items-center justify-center hover:shadow-cyan-500/90 transition-all duration-300 cursor-pointer group z-50 pointer-events-auto border-2 border-cyan-300/50"
+                  className="absolute top-0 left-1/2 -translate-x-1/2 w-9 h-9 bg-gradient-to-br from-cyan-300 via-cyan-500 to-teal-600 rounded-full shadow-lg shadow-cyan-500/50 flex items-center justify-center hover:shadow-cyan-500/70 transition-all duration-300 cursor-pointer group z-50 pointer-events-auto border border-cyan-300/50"
                   title="Cách thức hoạt động"
                 >
                   {/* Planet surface */}
@@ -257,7 +251,7 @@ export default function HeroSection() {
                   }}
                   whileHover={{ scale: 1.3 }}
                   whileTap={{ scale: 0.9 }}
-                  className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-8 bg-gradient-to-br from-amber-300 via-orange-500 to-orange-700 rounded-full shadow-2xl shadow-orange-500/70 flex items-center justify-center hover:shadow-orange-500/90 transition-all duration-300 cursor-pointer group z-30 pointer-events-auto border-2 border-amber-300/50"
+                  className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-8 bg-gradient-to-br from-amber-300 via-orange-500 to-orange-700 rounded-full shadow-lg shadow-orange-500/50 flex items-center justify-center hover:shadow-orange-500/70 transition-all duration-300 cursor-pointer group z-30 pointer-events-auto border border-amber-300/50"
                   title="Bảng giá"
                 >
                   {/* Planet surface */}
@@ -271,11 +265,11 @@ export default function HeroSection() {
               {/* Center circle - Rocket */}
               <motion.button
                 onClick={() => openAuthModal('register')}
-                className="absolute inset-1/3 bg-gradient-to-br from-cyan-400 via-teal-500 to-teal-700 rounded-full shadow-2xl shadow-teal-500/80 flex items-center justify-center hover:shadow-teal-500/100 transition-all duration-300 cursor-pointer group z-10 border-2 border-cyan-300/50"
-                animate={{ scale: [1, 1.08, 1] }}
-                transition={{ duration: 3, repeat: Infinity }}
-                whileHover={{ scale: 1.15 }}
-                whileTap={{ scale: 0.9 }}
+                className="absolute inset-1/3 bg-gradient-to-br from-cyan-400 via-teal-500 to-teal-700 rounded-full shadow-lg shadow-teal-500/60 flex items-center justify-center hover:shadow-teal-500/80 transition-all duration-300 cursor-pointer group z-10 border border-cyan-300/50"
+                animate={{ scale: [1, 1.05, 1] }}
+                transition={{ duration: 4, repeat: Infinity }}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
                 title="Tạo tài khoản"
               >
                 {/* Glow effect */}
@@ -283,12 +277,11 @@ export default function HeroSection() {
                 <div className="flex flex-col items-center gap-1 relative z-10">
                   <motion.div
                     animate={{ 
-                      scale: [1, 1.2, 1],
-                      y: [0, -12, 0],
-                      opacity: [1, 0.8, 1],
+                      scale: [1, 1.15, 1],
+                      y: [0, -10, 0],
                     }}
                     transition={{ 
-                      duration: 2.5,
+                      duration: 3,
                       repeat: Infinity,
                       ease: "easeInOut"
                     }}
@@ -305,3 +298,5 @@ export default function HeroSection() {
     </section>
   )
 }
+
+export default memo(HeroSectionContent)
