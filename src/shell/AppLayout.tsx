@@ -17,7 +17,7 @@ export function AppLayout() {
   const [currentIconIndex, setCurrentIconIndex] = useState(0)
 
   const contactOptions = [
-  {icon: SiX,label: "X (Twitter)",link: "https://x.com/tamas7504",bgColor: "bg-black",},
+  {icon: SiX,label: "X (Twitter)",link: "https://x.com/tamas7504",bgColor: "bg-black"},
   {icon: SiGmail,label: "Email",link: "mailto:tamas7504@gmail.com",bgColor: "bg-red-400",},
   {icon: SiFacebook,label: "Facebook",link: "https://www.facebook.com/tamas7504/",bgColor: "bg-blue-600",},
   {icon: SiLinkedin,label: "LinkedIn",link: "https://www.linkedin.com/in/tamas7504/",bgColor: "bg-blue-500",},
