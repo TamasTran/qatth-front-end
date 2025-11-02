@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from 'react'
 
 type Msg = { role: 'user' | 'assistant', content: string }

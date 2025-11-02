@@ -27,7 +27,7 @@ const pricingPlans = [
     buttonColor: 'bg-slate-600 hover:bg-slate-700'
   },
   {
-    name: 'Medium',
+    name: 'Pro',
     price: '59,000',
     description: 'Cho những người tìm việc nghiêm túc',
     features: [
@@ -47,7 +47,7 @@ const pricingPlans = [
     buttonColor: 'bg-teal-600 hover:bg-teal-700'
   },
   {
-    name: 'Pro',
+    name: 'Premium',
     price: '139,000',
     description: 'Cho những người muốn thành công',
     features: [
