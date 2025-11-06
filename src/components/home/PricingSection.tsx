@@ -13,10 +13,11 @@ const pricingPlans = [
     price: '0',
     description: 'Hoàn toàn miễn phí',
     features: [
-      'Quét CV 1 lần/tháng',
+      'Quét CV 1 lần/tuần',
       'Gợi ý nghề cơ bản',
       'Chatbot hỗ trợ cơ bản',
-      'Không giới hạn xem việc làm'
+      'Không giới hạn xem việc làm',
+      'Trải nghiệm mô phỏng phỏng vấn 2 phút'
     ],
     highlighted: false,
     badgeColor: 'bg-slate-500',
@@ -24,16 +25,15 @@ const pricingPlans = [
     borderColor: 'border-slate-200',
     textColor: 'text-slate-900',
     textColorDark: 'text-slate-800',
-    buttonColor: 'bg-slate-600 hover:bg-slate-700'
+    buttonColor: 'bg-slate-600 hover:bg-slate-700',
   },
   {
-    name: 'Pro',
+    name: 'Premium',
     price: '59,000',
     description: 'Cho những người tìm việc nghiêm túc',
     features: [
-      'Quét CV 10 lần/tháng',
+      'Quét CV 10 lần/tuần',
       'Gợi ý nghề nâng cao',
-      'Chatbot AI thông minh',
       'Mô phỏng phỏng vấn 5 lần',
       'Ưu tiên hỗ trợ',
       'Báo cáo chi tiết'
@@ -47,7 +47,7 @@ const pricingPlans = [
     buttonColor: 'bg-teal-600 hover:bg-teal-700'
   },
   {
-    name: 'Premium',
+    name: 'Agent Pro',
     price: '139,000',
     description: 'Cho những người muốn thành công',
     features: [

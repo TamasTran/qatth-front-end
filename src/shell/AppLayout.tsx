@@ -110,7 +110,7 @@ export function AppLayout() {
         <Outlet context={{ openAuthModal, setAuthModalOnClose }} />
       </motion.main>
       <footer className="border-t border-brand-200/30 py-8 text-center text-sm text-slate-700 bg-white backdrop-blur-sm mt-auto">
-        © {new Date().getFullYear()} QATTH - AI hiểu bạn Doanh nghiệp chọn bạn.
+        © {new Date().getFullYear()} QATTH - AI hiểu bạn, Nhà tuyển dụng chọn bạn.
       </footer>
 
       <AuthModal

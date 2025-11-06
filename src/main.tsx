@@ -11,7 +11,6 @@ import CVScanner from './pages/CVScanner'
 import CVBuilder from './pages/CVBuilder'
 import Jobs from './pages/jobs/Jobs'
 import JobDetail from './pages/jobs/JobDetail'
-import Chatbot from './pages/Chatbot'
 import Interview from './pages/Interview'
 import Profile from './pages/Profile'
 import Recharge from './pages/Recharge'
@@ -28,7 +27,6 @@ const router = createBrowserRouter([
       { path: 'register', element: <Register /> },
       { path: 'cv-scanner', element: <ProtectedRoute><CVScanner /></ProtectedRoute> },
       { path: 'cv-builder', element: <ProtectedRoute><CVBuilder /></ProtectedRoute> },
-      { path: 'chatbot', element: <ProtectedRoute><Chatbot /></ProtectedRoute> },
       { path: 'jobs', element: <ProtectedRoute><Jobs /></ProtectedRoute> },
       { path: 'jobs/:id', element: <ProtectedRoute><JobDetail /></ProtectedRoute> },
       { path: 'interview', element: <ProtectedRoute><Interview /></ProtectedRoute> },

@@ -24,7 +24,6 @@ export function Header({ onAuthClick }: HeaderProps) {
     { to: '/cv-builder', label: 'Tạo CV' },
     { to: '/jobs', label: 'Tuyển dụng' },
     { to: '/cv-scanner', label: 'Quét CV' },
-    { to: '/chatbot', label: 'Chatbot CV' },
     { to: '/interview', label: 'Phỏng vấn' },
   ]
 
