@@ -65,7 +65,11 @@ const CVScanner: React.FC = () => {
     Record<number, string> | null
   >(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const webhookBaseUrl = import.meta.env.VITE_WEBHOOK_URL || 'http://localhost:1234/webhook';
+  const webhookBaseUrl = import.meta.env.VITE_WEBHOOK_URL;
+  
+  if (!webhookBaseUrl) {
+    console.error('Lỗi: Vui lòng cấu hình VITE_WEBHOOK_URL trong file .env.local');
+  }
 
   // Extract text from PDF
   const extractTextFromPDF = async (file: File): Promise<string> => {
@@ -126,35 +130,47 @@ const CVScanner: React.FC = () => {
       setError('');
 
       // Call n8n webhook for quiz generation
-      const quizResponse = await fetch(
-        `${webhookBaseUrl}/quiz`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ text: cvContent }),
-          signal: AbortSignal.timeout(120000), // 120 second timeout (n8n AI Agent needs time)
-        }
-      );
+      if (!webhookBaseUrl) {
+        throw new Error('Vui lòng cấu hình VITE_WEBHOOK_URL trong file .env.local');
+      }
+
+      const baseUrl = webhookBaseUrl.endsWith('/') ? webhookBaseUrl.slice(0, -1) : webhookBaseUrl;
+      const quizUrl = `${baseUrl}/quiz`;
+      
+      console.log('Calling N8N Quiz Webhook:', quizUrl);
+      console.log('Request body:', { text: cvContent.substring(0, 100) + '...' });
+
+      const quizResponse = await fetch(quizUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: cvContent }),
+        signal: AbortSignal.timeout(120000), // 120 second timeout (n8n AI Agent needs time)
+      });
 
       if (!quizResponse.ok) {
         const errorText = await quizResponse.text();
+        console.error('N8N Error Response:', errorText);
         throw new Error(`Lỗi server (${quizResponse.status}): ${errorText || 'Không thể tạo bài quiz'}`);
       }
 
       let responseData = await quizResponse.json();
       
+      console.log('Raw N8N Response:', responseData);
+      
       // Handle n8n response wrapping (sometimes response is wrapped in array)
       if (Array.isArray(responseData) && responseData.length > 0) {
+        console.log('Unwrapping array response');
         responseData = responseData[0];
       }
       
       // Handle n8n output property wrapping
       if (responseData.output && typeof responseData.output === 'object') {
+        console.log('Unwrapping output property');
         responseData = responseData.output;
       }
       
       // Log response for debugging
-      console.log('Quiz Response:', responseData);
+      console.log('Processed Quiz Response:', responseData);
       
       // Validate quiz data structure
       if (!responseData) {
@@ -165,6 +181,7 @@ const CVScanner: React.FC = () => {
       
       // Handle case where questions might be wrapped in another property
       if (!questions && responseData.data && responseData.data.questions) {
+        console.log('Extracting questions from data property');
         questions = responseData.data.questions;
       }
       
@@ -250,39 +267,55 @@ const CVScanner: React.FC = () => {
       );
       setUserAnswerQuiz(userAnswersMap);
 
+      // Prepare webhook URL
+      if (!webhookBaseUrl) {
+        throw new Error('Vui lòng cấu hình VITE_WEBHOOK_URL trong file .env.local');
+      }
+
+      const baseUrl = webhookBaseUrl.endsWith('/') ? webhookBaseUrl.slice(0, -1) : webhookBaseUrl;
+      const answerQuizUrl = `${baseUrl}/answer-quiz`;
+      
+      console.log('Calling N8N Answer Quiz Webhook:', answerQuizUrl);
+      console.log('Request body:', {
+        cv: cvText.substring(0, 100) + '...',
+        answerquiz: JSON.stringify(answerQuiz).substring(0, 100) + '...',
+      });
+
       // Call n8n webhook to analyze answers
-      const analysisResponse = await fetch(
-        `${webhookBaseUrl}/answer-quiz`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            cv: cvText,
-            answerquiz: JSON.stringify(answerQuiz),
-          }),
-          signal: AbortSignal.timeout(120000), // 120 second timeout (n8n AI Agent needs time)
-        }
-      );
+      const analysisResponse = await fetch(answerQuizUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          cv: cvText,
+          answerquiz: JSON.stringify(answerQuiz),
+        }),
+        signal: AbortSignal.timeout(120000), // 120 second timeout (n8n AI Agent needs time)
+      });
 
       if (!analysisResponse.ok) {
         const errorText = await analysisResponse.text();
+        console.error('N8N Error Response:', errorText);
         throw new Error(`Lỗi server (${analysisResponse.status}): ${errorText || 'Không thể phân tích câu trả lời'}`);
       }
 
       let responseData = await analysisResponse.json();
       
+      console.log('Raw N8N Analysis Response:', responseData);
+      
       // Handle n8n response wrapping (sometimes response is wrapped in array)
       if (Array.isArray(responseData) && responseData.length > 0) {
+        console.log('Unwrapping array response');
         responseData = responseData[0];
       }
       
       // Handle n8n output property wrapping
       if (responseData.output && typeof responseData.output === 'object') {
+        console.log('Unwrapping output property');
         responseData = responseData.output;
       }
       
       // Log response for debugging
-      console.log('Analysis Response:', responseData);
+      console.log('Processed Analysis Response:', responseData);
 
       // Validate analysis data structure
       if (!responseData) {
